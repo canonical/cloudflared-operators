@@ -158,6 +158,10 @@ class CloudflareAPI:
             tunnel_id: cloudflare tunnel ID.
         """
         logger.info("deleting tunnel %s", tunnel_id)
+        connections_response = self._session.delete(
+            f"{self._endpoint}/{tunnel_id}/connections", timeout=10
+        )
+        connections_response.raise_for_status()
         response = self._session.delete(f"{self._endpoint}/{tunnel_id}", timeout=10)
         response.raise_for_status()
 

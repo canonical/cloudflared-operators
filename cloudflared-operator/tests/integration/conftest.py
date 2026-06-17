@@ -130,6 +130,12 @@ class CloudflareAPI:
             tunnel_id: cloudflare tunnel ID.
         """
         logger.info("deleting tunnel %s", tunnel_id)
+        # Cloudflare refuses to delete a tunnel that still has active connections
+        # (HTTP 400, code 1022), so clean up its connections first.
+        connections_response = self._session.delete(
+            f"{self._endpoint}/{tunnel_id}/connections", timeout=10
+        )
+        connections_response.raise_for_status()
         response = self._session.delete(f"{self._endpoint}/{tunnel_id}", timeout=10)
         response.raise_for_status()
 
