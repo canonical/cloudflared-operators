@@ -173,7 +173,7 @@ def juju_fixture(request: pytest.FixtureRequest) -> Generator[jubilant.Juju, Non
 @pytest.fixture(name="cloudflared_charm", scope="module")
 def cloudflared_charm_fixture(juju: jubilant.Juju, charm_paths: dict[str, CharmPathList]) -> str:
     """Deploy the cloudflared charm and return its application name."""
-    juju.deploy(charm_paths[CLOUDFLARED_APP].path, app=CLOUDFLARED_APP, num_units=0)
+    juju.deploy(charm_paths[CLOUDFLARED_APP].path, app=CLOUDFLARED_APP)
     return CLOUDFLARED_APP
 
 
