@@ -154,6 +154,7 @@ def juju_fixture(request: pytest.FixtureRequest) -> Generator[jubilant.Juju, Non
 
     def show_debug_log(juju: jubilant.Juju):
         if request.session.testsfailed:
+            print(juju.cli("status", "--relations"), end="")
             print(juju.debug_log(limit=1000), end="")
 
     model = request.config.getoption("--model")
@@ -237,7 +238,7 @@ def cloudflared_route_provider_2_fixture(juju: jubilant.Juju, cloudflared_charm:
 def dnsmasq_fixture(juju: jubilant.Juju) -> str:
     """Deploy and configure a dnsmasq server."""
     juju.deploy("ubuntu", app=DNSMASQ_APP, channel="latest/edge")
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
     juju.cli("exec", "--application", DNSMASQ_APP, "--", "apt", "update")
     juju.cli("exec", "--application", DNSMASQ_APP, "--", "apt", "install", "dnsmasq", "-y")
     for line in (

@@ -1,7 +1,8 @@
-#!/usr/bin/env python3
 # Copyright 2025 Canonical Ltd.
 # See LICENSE file for licensing details.
+
 # pylint: disable=protected-access,too-many-arguments,too-many-positional-arguments
+
 """Integration tests."""
 
 import contextlib
@@ -60,10 +61,10 @@ def test_tunnel_token_config(juju, cloudflare_api, cloudflared_charm):
     secret_uri = juju.add_secret("test-tunnel-token", {"tunnel-token": tunnel_token})
     juju.grant_secret("test-tunnel-token", cloudflared_charm)
     juju.config(cloudflared_charm, {"tunnel-token": str(secret_uri)})
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
     # required for deploying in LXD containers
     reboot_application(juju, base_app)
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
     wait_for_tunnel_healthy(cloudflare_api, tunnel_token)
 
 
@@ -80,7 +81,7 @@ def test_cloudflared_route_integration(
     assume: cloudflared tunnels provided in the integration is up and healthy.
     """
     juju.config(cloudflared_charm, {"tunnel-token": ""})
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
     tunnel_token_1 = cloudflare_api.create_tunnel_token()
     tunnel_token_2 = cloudflare_api.create_tunnel_token()
     juju.run(
@@ -93,10 +94,10 @@ def test_cloudflared_route_integration(
         "rpc",
         {"method": "set_tunnel_token", "args": json.dumps([tunnel_token_2])},
     )
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
     # required for deploying in LXD containers
     reboot_application(juju, cloudflared_charm)
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
     wait_for_tunnel_healthy(cloudflare_api, tunnel_token_1)
     wait_for_tunnel_healthy(cloudflare_api, tunnel_token_2)
 
@@ -108,7 +109,7 @@ def test_update_snap_channel(juju, cloudflared_charm):
     assume: cloudflared charm should refresh all charmed-cloudflared snap instances.
     """
     juju.config(cloudflared_charm, {"charmed-cloudflared-snap-channel": "latest/edge"})
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
     snap_list = juju.cli("exec", "--unit", "chrony/0", "--", "snap", "list")
     assert "charmed-cloudflared_" in snap_list
     for line in snap_list.splitlines():
@@ -131,7 +132,7 @@ def test_nameserver(
     assume: cloudflared tunnels should use the given nameserver.
     """
     juju.config(cloudflared_charm, {"tunnel-token": ""})
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
     tunnel_token = cloudflare_api.create_tunnel_token()
     logger.info("use dnsmasq nameserver: %s", dnsmasq_ip)
     juju.run(
@@ -144,10 +145,10 @@ def test_nameserver(
         "rpc",
         {"method": "set_tunnel_token", "args": json.dumps([tunnel_token])},
     )
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
     # required for deploying in LXD containers
     reboot_application(juju, cloudflared_charm)
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
     wait_for_tunnel_healthy(cloudflare_api, tunnel_token)
     dnsmasq_logs = juju.cli("exec", "--unit", f"{dnsmasq}/0", "--", "cat", "/var/log/dnsmasq.log")
     assert "argotunnel.com" in dnsmasq_logs
@@ -163,7 +164,7 @@ def test_remove(juju, cloudflared_charm):
     assert "charmed-cloudflared_" in snap_list
     logger.info("snap list before removal: %s", snap_list)
     juju.remove_relation(cloudflared_charm, "chrony")
-    juju.wait(lambda status: not status.apps[cloudflared_charm].units)
+    juju.wait(lambda status: not status.apps[cloudflared_charm].units, error=jubilant.any_error)
     snap_list = juju.cli("exec", "--unit", "chrony/0", "--", "snap", "list")
     assert "charmed-cloudflared_" not in snap_list
     logger.info("snap list after removal: %s", snap_list)

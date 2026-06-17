@@ -21,7 +21,7 @@ def test_build_and_deploy(
     """
     juju.integrate(f"{cloudflare_configurator}:ingress", f"{ingress_requirer}:ingress")
     juju.integrate(f"{cloudflare_configurator}:cloudflared-route", cloudflared_route_requirer)
-    juju.wait(jubilant.all_agents_idle)
+    juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
 
 
 def test_set_tunnel_token(juju, cloudflare_configurator, cloudflared_route_requirer):
@@ -35,7 +35,7 @@ def test_set_tunnel_token(juju, cloudflare_configurator, cloudflared_route_requi
     juju.config(
         cloudflare_configurator, {"domain": "example.com", "tunnel-token": str(secret_uri)}
     )
-    juju.wait(jubilant.all_active)
+    juju.wait(jubilant.all_active, error=jubilant.any_error)
     task = juju.run(f"{cloudflared_route_requirer}/0", "rpc", {"method": "get_tunnel_tokens"})
     assert json.loads(task.results["return"]) == ["foobar"]
 

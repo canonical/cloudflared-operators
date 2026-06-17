@@ -34,6 +34,7 @@ def juju_fixture(request: pytest.FixtureRequest) -> Generator[jubilant.Juju, Non
 
     def show_debug_log(juju: jubilant.Juju):
         if request.session.testsfailed:
+            print(juju.cli("status", "--relations"), end="")
             print(juju.debug_log(limit=1000), end="")
 
     model = request.config.getoption("--model")
