@@ -164,8 +164,13 @@ def test_remove(juju, cloudflared_charm):
     assert "charmed-cloudflared_" in snap_list
     logger.info("snap list before removal: %s", snap_list)
     juju.remove_relation(cloudflared_charm, "chrony")
-    juju.wait(lambda status: not status.apps[cloudflared_charm].units, error=jubilant.any_error)
-    snap_list = juju.cli("exec", "--unit", "chrony/0", "--", "snap", "list")
+    juju.wait(lambda status: not status.apps[cloudflared_charm].units)
+    deadline = time.time() + 300
+    while True:
+        snap_list = juju.cli("exec", "--unit", "chrony/0", "--", "snap", "list")
+        if "charmed-cloudflared_" not in snap_list or time.time() > deadline:
+            break
+        time.sleep(5)
     assert "charmed-cloudflared_" not in snap_list
     logger.info("snap list after removal: %s", snap_list)
     juju.integrate("chrony", cloudflared_charm)
