@@ -30,9 +30,6 @@ jobs:
     uses: canonical/charm-ci/.github/workflows/integration-test.yml@v0.0.1-alpha.3
     with:
       spread-jobs-include: "integration-test-ci:*"
-      # Names of repository secrets to forward to the integration tests.
-      # charm-ci masks them and exports them to the runner environment; spread.yaml
-      # then forwards them into the test environment (see the cloudflared suite).
       test-secret-1-name: CLOUDFLARE_ACCOUNT_ID
       test-secret-2-name: CLOUDFLARE_API_TOKEN
     secrets: inherit
@@ -40,23 +37,6 @@ jobs:
       contents: read
       packages: write
       actions: read
-  required_status_checks:
-    name: Required Integration Test Status Checks
-    runs-on: ubuntu-latest
-    needs:
-      - integration-test
-    if: always() && !cancelled()
-    timeout-minutes: 5
-    steps:
-      - name: Check integration-test status
-        run: |
-          RESULT="${{ needs.integration-test.result }}"
-          if [ "$RESULT" = "success" ] || [ "$RESULT" = "skipped" ]; then
-            exit 0
-          else
-            echo "integration-test failed with status: $RESULT"
-            exit 1
-          fi
   snap-test:
     name: "Snap test charmed-cloudflared (proxy: ${{ matrix.use-proxy }})"
     runs-on: ubuntu-latest
@@ -150,3 +130,22 @@ jobs:
         if: matrix.use-proxy
         run: |
           sudo lxc exec proxy -- cat /var/log/tinyproxy/tinyproxy.log
+  required_status_checks:
+    name: Required Test Status Checks
+    runs-on: ubuntu-latest
+    needs:
+      - unit-tests
+      - integration-test
+      - snap-test
+    if: always() && !cancelled()
+    timeout-minutes: 5
+    steps:
+      - name: Check integration-test status
+        run: |
+          RESULT="${{ needs.integration-test.result }}"
+          if [ "$RESULT" = "success" ] || [ "$RESULT" = "skipped" ]; then
+            exit 0
+          else
+            echo "integration-test failed with status: $RESULT"
+            exit 1
+          fi
