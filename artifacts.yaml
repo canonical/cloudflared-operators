@@ -1,0 +1,27 @@
+# Copyright 2025 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+version: 1
+rocks: []
+charms:
+- name: cloudflared
+  charmcraft-yaml: cloudflared-operator/charmcraft.yaml
+  resources: {}
+  platforms:
+  - arch: amd64
+  channel: latest/edge
+- name: cloudflare-configurator
+  charmcraft-yaml: cloudflare-configurator-operator/charmcraft.yaml
+  resources: {}
+  platforms:
+  - arch: amd64
+  channel: latest/edge
+snaps:
+- name: charmed-cloudflared
+  snapcraft-yaml: charmed-cloudflared-snap/snap/snapcraft.yaml
+  pack-dir: charmed-cloudflared-snap
+  platforms:
+  - arch: amd64
+  - arch: arm64
+    runner: [ubuntu-24.04-arm]
+

@@ -1,0 +1,41 @@
+# Copyright 2025 Canonical Ltd.
+# See LICENSE file for licensing details.
+project: cloudflared-operators
+path: /home/ubuntu/proj
+kill-timeout: 60m
+warn-timeout: 1m
+backends:
+  integration-test:
+    type: integration-test
+    systems:
+    - ubuntu-24.04:
+environment:
+  OPCLI_GIT_REF: '$(HOST: echo "${OPCLI_GIT_REF:-main}")'
+  CONCIERGE: concierge.yaml
+exclude:
+- .git
+- .tox
+- .venv
+- .*_cache
+integration-suites:
+  cloudflared-operator/tests/integration/:
+    summary: cloudflared charm integration tests
+    working-dir: cloudflared-operator/
+    backends:
+    - integration-test
+    systems: [ubuntu-24.04]
+    environment:
+      # Forwarded from the runner environment (set by the integration-test
+      # workflow's test-secret-*-name inputs) into the test environment.
+      CLOUDFLARE_ACCOUNT_ID: '$(HOST: echo "${CLOUDFLARE_ACCOUNT_ID:-}")'
+      CLOUDFLARE_API_TOKEN: '$(HOST: echo "${CLOUDFLARE_API_TOKEN:-}")'
+    pytest-arguments-template: &default-pytest-args |
+      --model testing
+      --keep-models
+  cloudflare-configurator-operator/tests/integration/:
+    summary: cloudflare-configurator charm integration tests
+    working-dir: cloudflare-configurator-operator/
+    backends:
+    - integration-test
+    systems: [ubuntu-24.04]
+    pytest-arguments-template: *default-pytest-args

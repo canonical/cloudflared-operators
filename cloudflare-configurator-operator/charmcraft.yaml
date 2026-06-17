@@ -1,0 +1,59 @@
+# Copyright 2024 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+name: cloudflare-configurator
+type: charm
+summary: Cloudflared configurator charm.
+
+links:
+  documentation: https://discourse.charmhub.io
+  issues: https://github.com/canonical/cloudflare-configurator-operator/issues
+  source: https://github.com/canonical/cloudflare-configurator-operator
+  contact: https://launchpad.net/~canonical-is-devops
+
+description: >-
+  A [Juju](https://juju.is/) [charm](https://juju.is/docs/olm/charmed-operators) 
+  for configuring the [cloudflared charm](https://charmhub.io/cloudflared)
+  in your systems.
+
+config:
+  options:
+    domain:
+      description: The hostname the app is exposed on cloudflare.
+      type: string
+    nameserver:
+      type: string
+      description: >-
+        The nameserver used by the cloudflared tunnel.
+        Cloudflared will use kube DNS if this option is not set.
+    tunnel-token:
+      description: >-
+        A juju secret ID, points to a juju secret containing the cloudflared tunnel-token.
+        You can create this juju secret by using the following command:
+        `juju add-secret my-token tunnel-token=<cloudflared-tunnel-token> && juju grant-secret my-token cloudflare-configurator`
+      type: secret
+
+actions:
+  get-ingress-data:
+    description: Get received ingress integration data.
+
+provides:
+  ingress:
+    interface: ingress
+    limit: 1
+  cloudflared-route:
+    interface: cloudflared-route
+    limit: 1
+
+base: ubuntu@24.04
+build-base: ubuntu@24.04
+platforms:
+  amd64:
+parts:
+  charm:
+    source: .
+    plugin: uv
+    build-snaps:
+    - astral-uv
+assumes:
+  - juju >= 3.1
