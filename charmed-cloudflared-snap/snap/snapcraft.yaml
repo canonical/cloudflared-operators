@@ -1,3 +1,6 @@
+# Copyright 2025 Canonical Ltd.
+# See LICENSE file for licensing details.
+
 name: charmed-cloudflared
 base: core24
 # don't change the following line, it's necessary for renovate!
