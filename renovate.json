@@ -57,6 +57,12 @@
   "ignorePaths": [],
   "packageRules": [
     {
+      "groupName": "Python dependencies",
+      "matchDatasources": [
+        "pypi"
+      ]
+    },
+    {
       "enabled": true,
       "matchDatasources": [
         "docker"
