@@ -13,6 +13,18 @@
   "customManagers": [
     {
       "customType": "regex",
+      "datasourceTemplate": "github-tags",
+      "description": "Update the cloudflared version in the snap",
+      "managerFilePatterns": [
+        "/(^|/)snap/snapcraft\\.yaml$/"
+      ],
+      "matchStrings": [
+        "version: &cloudflared-version (?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "packageNameTemplate": "cloudflare/cloudflared"
+    },
+    {
+      "customType": "regex",
       "datasourceTemplate": "docker",
       "description": "Update base image references",
       "managerFilePatterns": [
@@ -44,6 +56,12 @@
   ],
   "ignorePaths": [],
   "packageRules": [
+    {
+      "groupName": "Python dependencies",
+      "matchDatasources": [
+        "pypi"
+      ]
+    },
     {
       "enabled": true,
       "matchDatasources": [

@@ -1,0 +1,150 @@
+# Copyright 2025 Canonical Ltd.
+# See LICENSE file for licensing details.
+name: Tests
+on:
+  pull_request:
+jobs:
+  unit-tests:
+    strategy:
+      matrix:
+        charm:
+          - name: cloudflared
+            working-directory: ./cloudflared-operator
+          - name: cloudflare-configurator
+            working-directory: ./cloudflare-configurator-operator
+    name: Unit tests for ${{ matrix.charm.name }}
+    uses: canonical/operator-workflows/.github/workflows/test.yaml@main
+    permissions:
+      contents: read
+      pull-requests: write
+    secrets: inherit
+    with:
+      runs-on-base: ubuntu-24.04
+      python-version: "3.12"
+      self-hosted-runner: false
+      working-directory: ${{ matrix.charm.working-directory }}
+      with-uv: true
+  integration-test:
+    uses: canonical/charm-ci/.github/workflows/integration-test.yml@v0.0.1-alpha.3
+    with:
+      spread-jobs-include: "integration-test-ci:*"
+      test-secret-1-name: CLOUDFLARE_ACCOUNT_ID
+      test-secret-2-name: CLOUDFLARE_API_TOKEN
+    secrets: inherit
+    permissions:
+      contents: read
+      packages: write
+      actions: read
+  snap-test:
+    name: "Snap test charmed-cloudflared (proxy: ${{ matrix.use-proxy }})"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        use-proxy: [ true, false ]
+    defaults:
+      run:
+        working-directory: charmed-cloudflared-snap
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up environment
+        run: |
+          sudo adduser "$USER" lxd
+          # `newgrp` does not work in GitHub Actions; use `sudo --user` instead
+          sudo --user "$USER" --preserve-env --preserve-env=PATH -- env -- lxd waitready
+          sudo --user "$USER" --preserve-env --preserve-env=PATH -- env -- lxd init --auto
+          # Workaround for Docker & LXD on same machine
+          sudo iptables -F FORWARD
+          sudo iptables -P FORWARD ACCEPT
+          sudo snap install snapcraft --classic
+      - name: Prepare LXD containers
+        if: matrix.use-proxy
+        run: |
+          sudo lxc network create airgapped \
+            ipv4.address=10.10.10.1/24 \
+            ipv4.nat=true \
+            ipv6.address=none
+          sudo lxc network acl create airgapped
+          sudo lxc network set airgapped security.acls=airgapped
+          sudo lxc network set airgapped security.acls.default.egress.action=allow
+          sudo lxc launch ubuntu:24.04 airgapped --network=airgapped --vm
+          sudo lxc launch ubuntu:24.04 proxy --vm
+      - name: Pack snap
+        id: pack
+        run: sudo --user "$USER" --preserve-env --preserve-env=PATH -- env -- snapcraft pack -v
+      - name: Snapcraft logs
+        if: ${{ success() || (failure() && steps.pack.outcome == 'failure') }}
+        run: cat ~/.local/state/snapcraft/log/*
+      - name: Upload snap package
+        uses: actions/upload-artifact@v7
+        with:
+          name: charmed-cloudflared-${{ matrix.use-proxy }}.snap
+          path: "charmed-cloudflared-snap/*.snap"
+          if-no-files-found: error
+          overwrite: 'true'
+      - name: Setup LXD container
+        if: matrix.use-proxy
+        run: |
+          sudo lxc exec proxy -- apt-get update
+          sudo lxc exec proxy -- apt-get install -y tinyproxy
+          sudo lxc exec proxy -- sed -i 's/^Allow/#Allow/g' /etc/tinyproxy/tinyproxy.conf
+          sudo lxc exec proxy -- systemctl restart tinyproxy.service
+          sudo lxc file push *.snap airgapped/root/
+          sudo lxc exec airgapped -- snap install /root/$(ls *.snap) --dangerous
+          sudo lxc network acl rule add airgapped egress \
+            action=reject protocol=udp \
+            destination_port="0-52,54-65535" state=enabled
+          sudo lxc network acl rule add airgapped egress \
+            action=reject protocol=tcp \
+            destination_port="0-8887,8889-65535" state=enabled
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Install dependencies
+        run: pip install pytest requests
+      - name: Run tests
+        if: matrix.use-proxy
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          export SNAP_FILE=$(ls charmed-cloudflared_*.snap)
+          sudo snap set system experimental.parallel-instances=true
+          pytest tests -v --tb native -rP --log-cli-level=DEBUG \
+            --installed-snap=charmed-cloudflared \
+            --https-proxy=http://$(sudo lxc list proxy -c4 --format csv | cut -f 1 -d " "):8888 \
+            --xargs="sudo lxc exec airgapped --"
+      - name: Run tests
+        if: matrix.use-proxy != true
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          export SNAP_FILE=$(ls charmed-cloudflared_*.snap)
+          sudo snap set system experimental.parallel-instances=true
+          pytest tests -v --tb native -rP --log-cli-level=DEBUG --snap-file=./$SNAP_FILE
+      - name: Show proxy logs
+        if: matrix.use-proxy
+        run: |
+          sudo lxc exec proxy -- cat /var/log/tinyproxy/tinyproxy.log
+  required_status_checks:
+    name: Required Test Status Checks
+    runs-on: ubuntu-latest
+    needs:
+      - unit-tests
+      - integration-test
+      - snap-test
+    if: always() && !cancelled()
+    timeout-minutes: 5
+    steps:
+      - name: Check all test status
+        run: |
+          STATUS=0
+          for result in ${{ needs.unit-tests.result }} ${{ needs.integration-test.result }} ${{ needs.snap-test.result }}; do
+            if [ "$result" != "success" ] && [ "$result" != "skipped" ]; then
+              echo "A test job failed with status: $result"
+              STATUS=1
+            fi
+          done
+          exit $STATUS

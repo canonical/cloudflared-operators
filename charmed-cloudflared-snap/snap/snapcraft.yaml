@@ -1,0 +1,61 @@
+# Copyright 2025 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+name: charmed-cloudflared
+base: core24
+# don't change the following line, it's necessary for renovate!
+version: &cloudflared-version 2026.5.0
+summary: Cloudflared in a snap.
+description: >-
+  Cloudflared is the software powering Cloudflare Tunnel.
+  It runs on origin servers to connect applications or private networks to Cloudflare.
+
+platforms:
+  amd64:
+    build-on: [ amd64 ]
+    build-for: [ amd64 ]
+  arm64:
+    build-on: [ arm64 ]
+    build-for: [ arm64 ]
+
+grade: stable
+confinement: strict
+license: Apache-2.0
+
+system-usernames:
+  _daemon_: shared
+
+layout:
+  /etc:
+    bind: $SNAP_DATA/etc
+
+apps:
+  cloudflared:
+    command: entrypoint.py
+    daemon: simple
+    plugs:
+      - network
+      - network-bind
+
+parts:
+  patches:
+    plugin: nil
+    source: ./snap/patches
+  cloudflared:
+    plugin: nil
+    source: https://github.com/cloudflare/cloudflared.git
+    source-type: git
+    source-tag: *cloudflared-version
+    after: [ patches ]
+    build-snaps: [ go ]
+    build-environment:
+      - GO111MODULE: "on"
+      - CGO_ENABLED: "0"
+    override-build: |
+      git apply $(realpath $CRAFT_PART_BUILD/../../patches/build/)/*.patch      
+      make cloudflared
+      mkdir -p $CRAFT_PART_INSTALL/usr/bin
+      cp ./cloudflared $CRAFT_PART_INSTALL/usr/bin
+  scripts:
+    plugin: dump
+    source: ./snap/local
