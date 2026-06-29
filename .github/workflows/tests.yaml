@@ -138,12 +138,13 @@ jobs:
     if: always() && !cancelled()
     timeout-minutes: 5
     steps:
-      - name: Check integration-test status
+      - name: Check all test status
         run: |
-          RESULT="${{ needs.integration-test.result }}"
-          if [ "$RESULT" = "success" ] || [ "$RESULT" = "skipped" ]; then
-            exit 0
-          else
-            echo "integration-test failed with status: $RESULT"
-            exit 1
-          fi
+          STATUS=0
+          for result in ${{ needs.unit-tests.result }} ${{ needs.integration-test.result }} ${{ needs.snap-test.result }}; do
+            if [ "$result" != "success" ] && [ "$result" != "skipped" ]; then
+              echo "A test job failed with status: $result"
+              STATUS=1
+            fi
+          done
+          exit $STATUS
