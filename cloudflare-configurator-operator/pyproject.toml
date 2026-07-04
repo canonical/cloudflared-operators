@@ -14,7 +14,7 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
-  "ops==3.7.1",
+  "ops==3.8.0",
   "pydantic==2.13.4",
 ]
 
@@ -48,7 +48,7 @@ static = [
   "bandit[toml]",
 ]
 integration = [
-  "jubilant==1.10.0",
+  "jubilant==1.11.0",
   "opcli @ git+https://github.com/canonical/charm-ci.git@v0.0.1-alpha.3",
   "pytest",
 ]

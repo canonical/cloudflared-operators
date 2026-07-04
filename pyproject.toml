@@ -9,7 +9,7 @@ readme = "README.md"
 fmt = [ "ruff" ]
 lint = [
   "codespell",
-  "jubilant==1.10.0",
+  "jubilant==1.11.0",
   "mypy",
   "ops[testing]",
   "pep8-naming",
@@ -24,7 +24,7 @@ lint = [
 integration = [
   "allure-pytest>=2.8.18",
   "allure-pytest-collection-report @ git+https://github.com/canonical/data-platform-workflows@v24.0.0#subdirectory=python/pytest_plugins/allure_pytest_collection_report",
-  "jubilant==1.10.0",
+  "jubilant==1.11.0",
   "pytest",
   "pytest-asyncio",
   "pytest-operator",
