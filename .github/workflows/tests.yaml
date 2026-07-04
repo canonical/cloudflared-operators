@@ -46,7 +46,7 @@ jobs:
         working-directory: charmed-cloudflared-snap
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Set up environment
         run: |
           sudo adduser "$USER" lxd
