@@ -14,10 +14,10 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
-  "cosl==1.9.1",
-  "opentelemetry-api==1.41.0",
-  "ops==3.7.0",
-  "pydantic==2.13.2",
+  "cosl==1.9.2",
+  "opentelemetry-api==1.43.0",
+  "ops==3.8.0",
+  "pydantic==2.13.4",
 ]
 
 [dependency-groups]
@@ -50,7 +50,7 @@ static = [
   "bandit[toml]",
 ]
 integration = [
-  "jubilant==1.10.0",
+  "jubilant==1.11.0",
   "opcli @ git+https://github.com/canonical/charm-ci.git@v0.0.1-alpha.3",
   "pytest",
   "requests",
