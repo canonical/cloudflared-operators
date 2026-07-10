@@ -5,9 +5,9 @@
 
 """Integration tests."""
 
-import contextlib
 import json
 import logging
+import subprocess
 import time
 
 import jubilant
@@ -37,15 +37,33 @@ def wait_for_tunnel_healthy(cloudflare_api, tunnel_token):
 
 
 def reboot_application(juju: jubilant.Juju, app: str) -> None:
-    """Reboot all units of an application (required for deploying in LXD containers).
+    """Reboot the LXD containers hosting an application.
 
     Args:
         juju: Jubilant juju instance.
         app: Application name.
     """
-    # Rebooting terminates the exec session, which is expected.
-    with contextlib.suppress(jubilant.CLIError):
-        juju.cli("exec", "--application", app, "--", "sudo", "reboot")
+    status = json.loads(juju.cli("status", "--format", "json"))
+    machines = status.get("machines", {})
+    applications = status.get("applications", {})
+
+    machine_ids: set[str] = set()
+    for unit in applications.get(app, {}).get("units", {}).values():
+        if "machine" in unit:
+            machine_ids.add(unit["machine"])
+    if not machine_ids:
+        for principal in applications.values():
+            for unit in principal.get("units", {}).values():
+                subordinates = unit.get("subordinates", {})
+                if any(sub.split("/")[0] == app for sub in subordinates) and "machine" in unit:
+                    machine_ids.add(unit["machine"])
+
+    for machine in machine_ids:
+        container = machines.get(machine, {}).get("instance-id")
+        if container is None:
+            continue
+        logger.info("restarting LXD container %s for %s", container, app)
+        subprocess.run(["lxc", "restart", container], check=True)
 
 
 def test_tunnel_token_config(juju, cloudflare_api, cloudflared_charm):
