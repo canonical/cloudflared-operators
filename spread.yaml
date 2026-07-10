@@ -30,8 +30,8 @@ integration-suites:
     - integration-test
     systems: [ubuntu-24.04, ubuntu-24.04-arm64]
     environment:
-      MODULE/juju3: cloudflared-operator/tests/integration/test_charm.py
-      MODULE/juju4: cloudflared-operator/tests/integration/test_charm.py
+      MODULE/juju3: tests/integration/test_charm.py
+      MODULE/juju4: tests/integration/test_charm.py
       CLOUDFLARE_ACCOUNT_ID: '$(HOST: echo "${CLOUDFLARE_ACCOUNT_ID:-}")'
       CLOUDFLARE_API_TOKEN: '$(HOST: echo "${CLOUDFLARE_API_TOKEN:-}")'
     pytest-environment-template: |
@@ -48,6 +48,6 @@ integration-suites:
     - integration-test
     systems: [ubuntu-24.04, ubuntu-24.04-arm64]
     environment:
-      MODULE/juju3: cloudflare-configurator-operator/tests/integration/test_charm.py
-      MODULE/juju4: cloudflare-configurator-operator/tests/integration/test_charm.py
+      MODULE/juju3: tests/integration/test_charm.py
+      MODULE/juju4: tests/integration/test_charm.py
     pytest-arguments-template: *default-pytest-args
