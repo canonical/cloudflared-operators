@@ -9,9 +9,14 @@ backends:
     type: integration-test
     systems:
     - ubuntu-24.04:
+    - ubuntu-24.04-arm64:
+        runner: [ubuntu-24.04-arm]
+        arch: arm64
 environment:
   OPCLI_GIT_REF: '$(HOST: echo "${OPCLI_GIT_REF:-main}")'
-  CONCIERGE: concierge.yaml
+  CONCIERGE: '$(HOST: echo "${CONCIERGE:-concierge.yaml}")'
+  CONCIERGE/cloudflared_juju4: concierge-juju4.yaml
+  CONCIERGE/configurator_juju4: concierge-juju4.yaml
 exclude:
 - .git
 - .tox
@@ -21,10 +26,13 @@ integration-suites:
   cloudflared-operator/tests/integration/:
     summary: cloudflared charm integration tests
     working-dir: cloudflared-operator/
+    auto-discover: false
     backends:
     - integration-test
-    systems: [ubuntu-24.04]
+    systems: [ubuntu-24.04, ubuntu-24.04-arm64]
     environment:
+      MODULE/cloudflared: tests/integration/test_charm.py
+      MODULE/cloudflared_juju4: tests/integration/test_charm.py
       CLOUDFLARE_ACCOUNT_ID: '$(HOST: echo "${CLOUDFLARE_ACCOUNT_ID:-}")'
       CLOUDFLARE_API_TOKEN: '$(HOST: echo "${CLOUDFLARE_API_TOKEN:-}")'
     pytest-environment-template: |
@@ -36,7 +44,11 @@ integration-suites:
   cloudflare-configurator-operator/tests/integration/:
     summary: cloudflare-configurator charm integration tests
     working-dir: cloudflare-configurator-operator/
+    auto-discover: false
     backends:
     - integration-test
-    systems: [ubuntu-24.04]
+    systems: [ubuntu-24.04, ubuntu-24.04-arm64]
+    environment:
+      MODULE/configurator: tests/integration/test_charm.py
+      MODULE/configurator_juju4: tests/integration/test_charm.py
     pytest-arguments-template: *default-pytest-args
