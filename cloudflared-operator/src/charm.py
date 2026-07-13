@@ -25,6 +25,7 @@ from charms.operator_libs_linux.v2 import snap
 logger = logging.getLogger(__name__)
 
 CLOUDFLARED_ROUTE_INTEGRATION_NAME = "cloudflared-route"
+JUJU_INFO_INTEGRATION_NAME = "juju-info"
 # this is not a hardcoded password
 TUNNEL_TOKEN_CONFIG_NAME = "tunnel-token"  # nosec
 CHARMED_CLOUDFLARED_SNAP_NAME = "charmed-cloudflared"
@@ -87,6 +88,16 @@ class CloudflaredCharm(ops.CharmBase):
         for instance in self._get_installed_cloudflared_snaps():
             snap.remove(instance)
 
+    def _has_principal(self) -> bool:
+        """Check whether the charm is still related to a principal via juju-info.
+
+        Returns:
+            True if an active juju-info relation exists.
+        """
+        return any(
+            relation.active for relation in self.model.relations[JUJU_INFO_INTEGRATION_NAME]
+        )
+
     def _reconcile(self, _: ops.EventBase) -> None:
         """Handle changed configuration."""
         try:
@@ -98,6 +109,8 @@ class CloudflaredCharm(ops.CharmBase):
             self.unit.status = ops.BlockedStatus(str(exc))
             return
         required_snap_instances = set(metrics_ports.keys())
+        if not self._has_principal():
+            required_snap_instances = set()
         if not required_snap_instances:
             self.unit.status = ops.WaitingStatus("waiting for tunnel token")
             return
