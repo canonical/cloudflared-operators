@@ -59,11 +59,12 @@ class CloudflaredCharm(ops.CharmBase):
         self.framework.observe(self.on.install, self._on_install)
         self.framework.observe(self.on.config_changed, self._reconcile)
         self.framework.observe(self.on.secret_changed, self._reconcile)
+        self.framework.observe(self.on.stop, self._on_stop)
         self.framework.observe(self.on["cloudflared-route"].relation_changed, self._reconcile)
         self.framework.observe(self.on["cloudflared-route"].relation_departed, self._reconcile)
         self.framework.observe(self.on["juju-info"].relation_changed, self._reconcile)
         self.framework.observe(self.on["juju-info"].relation_departed, self._reconcile)
-        self.framework.observe(self.on.stop, self._on_stop)
+        self.framework.observe(self.on["juju-info"].relation_broken, self._on_stop)
         self._snap_client = snap.SnapClient()
         self._cloudflared_route = CloudflaredRouteRequirer(self)
         self._grafana_agent = COSAgentProvider(
