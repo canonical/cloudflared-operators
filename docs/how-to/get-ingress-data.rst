@@ -1,10 +1,10 @@
 .. meta::
-	 :description: Retrieve ingress relation data from the cloudflare-configurator charm.
+	 :description: Learn how to retrieve ingress relation data from the cloudflare-configurator charm.
 
 .. _how_to_get_ingress_data:
 
 How to get ingress relation data
-===============================
+================================
 
 Use the ``get-ingress-data`` action to inspect the data that the charm receives on its
 ``ingress`` relation.
