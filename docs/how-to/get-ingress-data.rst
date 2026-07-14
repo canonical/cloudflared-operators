@@ -41,8 +41,6 @@ To print a readable JSON view directly from the command output:
 		 | jq -r '.results.ingress' \
 		 | jq
 
-Example output
---------------
 
 The decoded ``ingress`` JSON looks like this:
 

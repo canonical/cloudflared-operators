@@ -28,6 +28,7 @@ Charm Operations
    Back up and restore <back-up-restore>
    Redeploy <redeploy>
    Upgrade <upgrade>
+   Get ingress data <get-ingress-data>
 
 Development and Community
 -------------------------
