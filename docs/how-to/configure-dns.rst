@@ -1,10 +1,10 @@
 .. meta::
-   :description: How to configure DNS resolution for the Cloudflare tunnel.
+   :description: How to configure DNS resolution for the Cloudflare tunnel used by the cloudflared charm.
 
-.. _how-to/configure-dns:
+.. _how_to_configure_dns:
 
-Configure DNS
-=============
+How to configure DNS
+====================
 
 By default, the ``cloudflared`` charm uses the Kubernetes cluster's internal DNS 
 (``kube-dns.kube-system.svc``) to resolve internal service names when routing traffic from
@@ -13,9 +13,6 @@ Cloudflare to your applications.
 If your architecture requires the tunnel to resolve names using a specific external DNS server or a
 custom internal DNS, you can override this behavior using the ``cloudflare-configurator`` charm.
 
-Set a custom nameserver
------------------------
-
 To configure a custom DNS resolver, set the ``nameserver`` configuration option on the
 ``cloudflare-configurator`` charm:
 
@@ -23,8 +20,7 @@ To configure a custom DNS resolver, set the ``nameserver`` configuration option 
 
    juju config cloudflare-configurator nameserver=8.8.8.8
 
-How it works
-------------
+After you run this configuration, the nameserver is set as follows:
 
 1. The ``cloudflare-configurator`` charm passes the configured nameserver to the ``cloudflared``
 charm via the ``cloudflared-route`` relation.

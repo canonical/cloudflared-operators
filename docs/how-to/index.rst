@@ -9,7 +9,7 @@ How-to guides
 Manage the full operations lifecycle of the ``cloudflared`` charms, from initial deployment through
 production maintenance.
 
-DNS and Networking
+DNS and networking
 ------------------
 
 .. toctree::
@@ -17,7 +17,7 @@ DNS and Networking
 
    Configure DNS <configure-dns>
 
-Charm Operations
+Charm operations
 ----------------
 
 .. toctree::
@@ -29,7 +29,7 @@ Charm Operations
    Redeploy <redeploy>
    Upgrade <upgrade>
 
-Development and Community
+Development and community
 -------------------------
 
 .. toctree::
