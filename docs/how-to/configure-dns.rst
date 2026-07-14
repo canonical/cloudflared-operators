@@ -12,6 +12,8 @@ Cloudflare to your applications.
 
 If your architecture requires the tunnel to resolve names using a specific external DNS server or a
 custom internal DNS, you can override this behavior using the ``cloudflare-configurator`` charm.
+This guide assumes that you've already deployed and integrated the ``cloudflared`` and
+``cloudeflare-configurator`` charms.
 
 To configure a custom DNS resolver, set the ``nameserver`` configuration option on the
 ``cloudflare-configurator`` charm:
