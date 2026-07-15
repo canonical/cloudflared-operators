@@ -9,12 +9,16 @@ charms:
   resources: {}
   platforms:
   - arch: amd64
+  - arch: arm64
+    runner: [ubuntu-24.04-arm]
   channel: latest/edge
 - name: cloudflare-configurator
   charmcraft-yaml: cloudflare-configurator-operator/charmcraft.yaml
   resources: {}
   platforms:
   - arch: amd64
+  - arch: arm64
+    runner: [ubuntu-24.04-arm]
   channel: latest/edge
 snaps:
 - name: charmed-cloudflared
