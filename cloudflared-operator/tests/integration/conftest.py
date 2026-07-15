@@ -219,7 +219,8 @@ def cloudflared_route_provider_1_fixture(juju: jubilant.Juju, cloudflared_charm:
         "any-charm",
         app=CLOUDFLARED_ROUTE_PROVIDER_1,
         config={"src-overwrite": SRC_OVERWRITE},
-        channel="latest/edge",
+        channel="latest/beta",
+        base="ubuntu@24.04",
     )
     juju.integrate(f"{cloudflared_charm}:cloudflared-route", CLOUDFLARED_ROUTE_PROVIDER_1)
     return CLOUDFLARED_ROUTE_PROVIDER_1
@@ -232,7 +233,8 @@ def cloudflared_route_provider_2_fixture(juju: jubilant.Juju, cloudflared_charm:
         "any-charm",
         app=CLOUDFLARED_ROUTE_PROVIDER_2,
         config={"src-overwrite": SRC_OVERWRITE},
-        channel="latest/edge",
+        channel="latest/beta",
+        base="ubuntu@24.04",
     )
     juju.integrate(f"{cloudflared_charm}:cloudflared-route", CLOUDFLARED_ROUTE_PROVIDER_2)
     return CLOUDFLARED_ROUTE_PROVIDER_2
