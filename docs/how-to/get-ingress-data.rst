@@ -33,7 +33,7 @@ Its value is a JSON string with two top-level keys:
 - ``application-data``: Ingress data for the related application.
 - ``unit-data``: A list of ingress data entries for related units, sorted by ``host``.
 
-To print a readable JSON view directly from the command output:
+Print a readable JSON view directly from the command output:
 
 .. code-block:: bash
 

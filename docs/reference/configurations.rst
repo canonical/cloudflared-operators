@@ -1,6 +1,6 @@
 .. meta::
    :description: Reference documentation for configurations available in the cloudflared and
-   cloudflare-configurator charms.
+                 cloudflare-configurator charms.
 
 .. _reference_configurations:
 
@@ -25,15 +25,15 @@ The ``cloudflare-configurator`` charm handles the public-facing domain and routi
    * - ``domain``
      - String
      - The public hostname (e.g., ``app.example.com``) that your application will be exposed on via
-     Cloudflare.
+       Cloudflare.
    * - ``nameserver``
      - String
      - The DNS server the tunnel should use for resolving internal service names. If not provided,
-     the charm defaults to the Kubernetes cluster's internal DNS (``kube-dns.kube-system.svc``).
+       the charm defaults to the Kubernetes cluster's internal DNS (``kube-dns.kube-system.svc``).
    * - ``tunnel-token``
      - String
      - The authentication token required to connect the tunnel to your Cloudflare Zero Trust
-     account. Both ``domain`` and ``tunnel-token`` must be set for the route to become active.
+       account. Both ``domain`` and ``tunnel-token`` must be set for the route to become active.
 
 cloudflared
 -----------
