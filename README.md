@@ -5,6 +5,15 @@ This repository contains the code for the following charms:
 2. `cloudflare-configurator`: A charm that configures the `cloudflared` charm. See the [cloudflare-configurator-operator README](cloudflare-configurator-operator/README.md) for more information.
 The repository also contains the snapped workload of some charms:
 1. `charmed-cloudflared`: A snap of the `cloudflared` workload made for the `cloudflared` charm. See the [charmed-cloudflared-snap README](charmed-cloudflared-snap/README.md) for more information.
+
+## Charmhub and Snapcraft
+
+| Name | Listing |
+|------|---------|
+| `cloudflare-configurator` | https://charmhub.io/cloudflare-configurator |
+| `cloudflared` | https://charmhub.io/cloudflared |
+| `charmed-cloudflared` | https://snapcraft.io/charmed-cloudflared |
+
 ## Project and community
 The cloudflared-operators project is a member of the Ubuntu family. It is an open source project that warmly welcomes community projects, contributions, suggestions, fixes and constructive feedback.
 * [Code of conduct](https://ubuntu.com/community/code-of-conduct)
