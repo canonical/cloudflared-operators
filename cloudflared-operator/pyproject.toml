@@ -51,7 +51,7 @@ static = [
 ]
 integration = [
   "jubilant==1.11.0",
-  "opcli @ git+https://github.com/canonical/charm-ci.git@v0.0.1-alpha.3",
+  "opcli @ git+https://github.com/canonical/charm-ci.git@v0.0.1-alpha.10",
   "pytest",
   "requests",
 ]
