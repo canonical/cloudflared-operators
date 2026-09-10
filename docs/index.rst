@@ -1,82 +1,47 @@
 .. meta::
-   :description: Discover the __charm_name__ charm, a Juju operator that deploys and manages __charm_name__.
+   :description: Discover the Cloudflared charm, a Juju operator that deploys and manages Cloudflared.
 
 .. vale Canonical.007-Headings-sentence-case = NO
 
 .. _index:
 
-__charm_name__ operator
+Cloudflared operator
 ========================
 
 .. vale Canonical.007-Headings-sentence-case = YES
 
-.. TODO: A single sentence that says what the product is, succinctly and memorably.
    Add a 1-2 sentence description of what the charm software does.
 
 A `Juju <https://juju.is/>`_ `charm <https://documentation.ubuntu.com/juju/3.6/reference/charm/>`_
-deploying and managing <Charm software> on <Kubernetes, VMs, or both>. 
-
-.. TODO: A paragraph of 2-5 short sentences, that describes what the product does
-   and what need the product meets.
+deploying and managing Cloudflare Tunnels on Kubernetes.
 
 Like any Juju charm, this charm supports one-line deployment, configuration, integration,
-scaling, and more. 
-For __charm_name__, this includes:
+scaling, and more.
+For the cloudflared and cloudflare-configurator charms, this includes:
 
-* list or summary of app-specific features
+* Securely exposing internal applications to the internet via Cloudflare Tunnels.
+* Centralized configuration management for tunnel routing, DNS, and ingress.
+* Seamless integration with the Juju ecosystem and Kubernetes workloads.
 
-The __charm_name__ charm allows for deployment on many different Kubernetes platforms,
-from `MicroK8s <https://microk8s.io/>`_ to 
-`Charmed Kubernetes <https://ubuntu.com/kubernetes>`_ to public cloud Kubernetes offerings.
-
-.. TODO: Finally, a paragraph that describes whom the product is useful for.
-
-This charm will make operating <Charm software> simple and straightforward for DevOps or
-SRE teams through Juju's clean interface. 
+These charms will make operating Cloudflare Tunnels simple and straightforward for DevOps or
+SRE teams through Juju's clean interface.
 
 In this documentation
 ---------------------
 
-.. TODO: Use the table below as a starting place.
-   You don't need to include all of the rows if they're not relevant to the charm
-   or if the docs don't exist. Use the vertical line symbol | to separate pages.
-   
-   When linking a how-to guide, use a verb to indicate an action/task. When
-   linking reference or explanation material, use gerunds or nouns.
-
-   Use "Get started" to highlight one or more tutorials. This row touches
-   on the "point of entry" domain.
-
-   For Deployment and Operations, place the most important/common use cases first.
-   If there are no meaningful Day 0/1 operations, drop "Deployment" from the table.
-   If there are no meaningful Day 2 operations, drop "Operations" from the table.
-   These rows touch on the domain of "lifecycle".
-   
-   Use the "Product-specific feature" row to highlight any 
-   major selling points of the charm -- what's the value proposition of this charm?
-
-   Use the "Design" row to showcase architecture and design-related documentation
-   for this charm. This row touches on the domain of "conceptual or stack layers".
-   
-   If possible, include a row that touches on the "quality" domain (security, performance).
-
-   Another charm-specific row to consider is "Integrations", especially if the
-   charm is meant to work in the context of a larger deployment. The "Integrations"
-   row touches on the domain of "interfaces".
-
 .. list-table::
     :header-rows: 1
 
-    * - 
-      - 
+    * -
+      -
     * - Get started
-      - :ref:`Guided tutorial <tutorial_index>` | :ref:`High-level deployment <reference_high_level_deployment>` 
+      - :ref:`Guided tutorial <tutorial_index>` | :ref:`High-level deployment <reference_high_level_deployment>`
     * - Deployment
-      - Relevant how-to guides and reference pages (related to initial setup, configurations, and customization)
+      - :ref:`Configure DNS <how_to_configure_dns>` | :ref:`Expose a front-end <how_to_expose_frontend>`
     * - Operations
-      - Relevant how-to guides and reference pages (examples: integrate with COS, backup/restore, redeploy, upgrade)
+      - :ref:`Integrate with COS <how_to_integrate_with_cos>` | :ref:`Upgrade <how_to_upgrade>` | :ref:`Troubleshoot <how_to_troubleshoot>`
     * - Product-specific feature
-      - Relevant guides and pages
+      - :ref:`Use the configurator charm <how_to_use_configurator>` | :ref:`Actions <reference_actions>`
     * - Design
       - :ref:`Architecture <reference_charm_architecture>` | :ref:`Design <explanation_charm_design>`
     * - Security
@@ -87,8 +52,8 @@ How this documentation is organized
 
 This documentation uses the `Diátaxis documentation structure <https://diataxis.fr/>`_.
 
-- The :ref:`Tutorial <tutorial_index>` takes you step-by-step through a basic deployment of the <Charm software> charm.
-- :ref:`How-to guides <how_to_index>` assume you have basic familiarity with the <Charm software> charm. Learn more about setting up, using, maintaining, and contributing to this charm.
+- The :ref:`Tutorial <tutorial_index>` takes you step-by-step through a basic deployment of the Cloudflare charms.
+- :ref:`How-to guides <how_to_index>` assume you have basic familiarity with the Cloudflare charms. Learn more about setting up, using, maintaining, and contributing to this charm.
 - :ref:`Reference <reference_index>` provides a guide to actions, configurations, relations, and other technical details.
 - :ref:`Explanation <explanation_index>` includes topic overviews, background and context and detailed discussion.
 - :ref:`Release notes <release_notes_index>` holds all the release notes for the charm, including any system or upgrade requirements.
@@ -101,7 +66,7 @@ to the documentation as the code. As such, we welcome community contributions, s
 constructive feedback on our documentation.
 See :ref:`How to contribute <how_to_contribute>` for more information.
 
-If there's a particular area of documentation that you'd like to see that's missing, please 
+If there's a particular area of documentation that you'd like to see that's missing, please
 file a bug.
 
 .. TODO: Add link to GitHub issues page for "file a bug"
@@ -109,7 +74,7 @@ file a bug.
 Project and community
 ---------------------
 
-The __charm_name__ Operator is a member of the Ubuntu family. It's an open-source project that warmly welcomes community 
+The cloudflared Operator is a member of the Ubuntu family. It's an open-source project that warmly welcomes community
 projects, contributions, suggestions, fixes, and constructive feedback.
 
 Governance and policies
@@ -129,7 +94,7 @@ Releases
 
 - :ref:`Release notes <release_notes_index>`
 
-Thinking about using the __charm_name__ Operator for your next project? 
+Thinking about using the cloudflared Operator for your next project?
 `Get in touch <https://matrix.to/#/#charmhub-charmdev:ubuntu.com>`_!
 
 .. vale Canonical.013-Spell-out-numbers-below-10 = NO
@@ -144,4 +109,4 @@ Thinking about using the __charm_name__ Operator for your next project?
     Reference <reference/index>
     Explanation <explanation/index>
     Release notes <release-notes/index>
-
+    Changelog <changelog>

@@ -1,5 +1,5 @@
 .. meta::
-   :description: Reference documentation for all relation endpoints supported by the __charm_name__ charm.
+   :description: Reference documentation for all relation endpoints supported by the cloudflared charm.
 
 .. _reference_relation_endpoints:
 
@@ -12,12 +12,12 @@ Integration example
 -------------------
 
 * **Interface**:
-* **Supported charms**: 
+* **Supported charms**:
 
 Description here.
 
-Example <integration-name> integrate command: 
+Example ingress integrate command:
 
 .. code-block:: bash
 
-   juju integrate __charm_name__ <supported-charm>:<integration-name>
+   juju integrate cloudflared frontend:ingress

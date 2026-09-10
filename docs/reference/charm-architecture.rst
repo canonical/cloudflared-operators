@@ -1,5 +1,5 @@
 .. meta::
-   :description: A technical overview of the __charm_name__ charm's architecture, containers, and Pebble services.
+   :description: A technical overview of the cloudflared charm's architecture, containers, and Pebble services.
 
 .. _reference_charm_architecture:
 
@@ -16,7 +16,7 @@ Add overview material here:
 2. Describe Pebble services.
 
 .. Example text
-   At its core, the __charm_name__ charm is <software> that does <brief description>.
+   At its core, the cloudflared charm is Cloudflare Tunnel software that does establishes secure connections to Cloudflare Tunnels.
 
    The charm design leverages the `sidecar <https://kubernetes.io/blog/2015/06/the-distributed-system-toolkit-patterns/#example-1-sidecar-containers>`_ pattern to allow multiple containers in each pod with `Pebble <https://documentation.ubuntu.com/juju/3.6/reference/pebble/>`_ running as the workload container's entrypoint.
 
@@ -29,14 +29,14 @@ Add overview material here:
    3. And so on.
 
 
-   As a result, if you run a ``kubectl get pods`` on a namespace named for the Juju model you've deployed the __charm_name__ charm into, you'll see something like the following:
+   As a result, if you run a ``kubectl get pods`` on a namespace named for the Juju model you've deployed the cloudflared charm into, you'll see something like the following:
 
    .. code-block:: bash
 
       NAME                             READY   STATUS    RESTARTS   AGE
-      __charm_name__-0                   N/N     Running   0         6h4m
+      cloudflared-0                   N/N     Running   0         6h4m
 
-   This shows there are <NUMBER> containers - <describe what the containers are>.
+   This shows there are one or more containers - the charm and workload components.
 
 Containers
 ----------
@@ -54,7 +54,7 @@ Configuration files for the containers can be found in the respective directorie
 OCI images
 ----------
 
-We use `Rockcraft <https://documentation.ubuntu.com/rockcraft/stable/>`_ to build OCI Images for __charm_name__.
+We use `Rockcraft <https://documentation.ubuntu.com/rockcraft/stable/>`_ to build OCI Images for cloudflared.
 The images are defined in (link to rock).
 They are published to `Charmhub <https://charmhub.io/>`_, the official repository of charms.
 
@@ -82,7 +82,7 @@ See :ref:`reference_juju_events`.
 Charm code overview
 -------------------
 
-The ``src/charm.py`` is the default entry point for a charm and has the <relevant-charm-class> Python class which inherits
+The ``src/charm.py`` is the default entry point for a charm and has the CloudflaredCharm Python class which inherits
 from CharmBase. CharmBase is the base class from which all charms are formed, defined
 by `Ops <https://ops.readthedocs.io/en/latest/index.html>`_ (Python framework for developing charms).
 
@@ -96,7 +96,7 @@ Take, for example, when a configuration is changed by using the CLI.
 
 .. code-block:: bash
 
-   juju config <relevant-charm-configuration>
+   juju config charmed-cloudflared-snap-channel=latest/stable
 
 2. A ``config-changed`` event is emitted.
 3. In the ``__init__`` method is defined how to handle this event like this:

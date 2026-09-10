@@ -1,15 +1,15 @@
 .. meta::
-   :description: Release notes for all versions of the __charm_name__ charm, including release policy and schedule.
+   :description: Release notes for all versions of the cloudflared charm, including release policy and schedule.
 
 .. _release_notes_index:
 
-.. Remember to update this file for your charm -- replace __charm_name__ with the appropriate name,
+.. Remember to update this file for your charm -- replace cloudflared with the appropriate name,
    specify the track the release notes will follow, and include a link on how to upgrade.
 
 Release notes
 =============
 
-Release notes for the <main> track of __charm_name__, summarizing new features,
+Release notes for the latest track of cloudflared, summarizing new features,
 bug fixes and backwards-incompatible changes in each revision.
 
 For upgrading the charm, see :ref:`How to upgrade <how_to_upgrade>`.
@@ -22,7 +22,7 @@ Release policy and schedule
    Use this section to define a schedule at which we publish release notes for this charm. 
    Please adopt one of the following release patterns:
    - Fixed release schedule (monthly, bimonthly, etc.)
-   - Release notes with every revision of the <main> track
+   - Release notes with every revision of the latest track
    - Release notes published when there's a need (maintenance, bug fixes, etc.)
 
 Releases
