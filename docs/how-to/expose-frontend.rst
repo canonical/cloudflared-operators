@@ -8,10 +8,10 @@ Cloudflare Tunnels allow you to securely expose internal applications to the pub
 Prerequisites
 -------------
 
-- A deployed front-end application charm (e.g., an HTTP server or Nginx charm) running in the same Juju model.
+- A deployed front-end application charm (for example, an HTTP server or Nginx charm) running in the same Juju model.
 - The ``cloudflared`` and ``cloudflare-configurator`` charms deployed and integrated.
 
-Define the Ingress Rule
+Define the ingress rule
 -----------------------
 
 To route external traffic to your front-end application, you must define an ingress rule in the ``cloudflare-configurator`` charm. This rule maps a public hostname to the internal service name and port of your front-end app.
@@ -27,7 +27,7 @@ Set the ingress configuration on the ``cloudflare-configurator`` charm. Replace 
 
 *Note: The exact configuration key for ingress rules may vary based on your specific charm revision. Consult the :ref:`Configurations Reference <reference_configurations>` for the exact dictionary schema.*
 
-Verify External Access
+Verify external access
 ----------------------
 
 1. Ensure your DNS records in Cloudflare point ``frontend.example.com`` to your Cloudflare Tunnel's CNAME.

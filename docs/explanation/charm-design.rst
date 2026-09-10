@@ -6,7 +6,7 @@
 Charm design
 ============
 
-.. TODO: Remember to update this file for your charm!!
+.. TODO:
    This document should offer perspective and opinion about the charm was designed,
    and why those design decisions were made.
 
@@ -16,7 +16,7 @@ Charm design
    * What sort of framing do the users need to understand this content?
    * What is the relationship between the user and the charm (or its code)?
    * What is the starting point for the user's thinking?
-   * How does the code come together to operate the underlying software/workload? 
+   * How does the code come together to operate the underlying software/workload?
 
    There's no specific template or structure to follow here -- you should provide your
    own perspective about the charm design. If a Mermaid diagram of the charm would enhance

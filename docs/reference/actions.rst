@@ -1,7 +1,20 @@
+
+.. meta::
+   :description: Reference documentation for all actions available in the __charm_name__ charm.
+
 .. _reference_actions:
 
 Actions
 =======
+
+.. TODO: Add link to the Charmhub actions tab.
+
+See Actions.
+
+.. seealso::
+
+
+   Read more about actions in the Juju docs: `Action <https://documentation.ubuntu.com/juju/latest/user/reference/action/>`_
 
 The ``cloudflared`` charm provides several Juju actions to manage the lifecycle of your Cloudflare Tunnels directly from the command line.
 
@@ -11,7 +24,7 @@ You can run these actions using the ``juju run`` command. For example:
 
    juju run cloudflared-k8s/leader get-ingress-data --param json
 
-Available Actions
+Available actions
 -----------------
 
 ``create-tunnel``

@@ -6,16 +6,16 @@
 How to upgrade
 ==============
 
-.. TODO: Remember to update this file for your charm!! 
+.. TODO: Remember to update this file for your charm!!
     Use this placeholder to provide information on how to
     upgrade the charm. The purpose of this document is
     to provide clarity and reassurance to our users about
     the upgrade process.
-    
+
     Some questions to answer:
     * Should we suggest that the user back up the charm or its database
       before upgrading?
-    * Does the user need to reset or reapply any configurations? 
+    * Does the user need to reset or reapply any configurations?
     * If the charm is used in a larger deployment: Does the user need to
       check for compatibility between the upgraded revision and any other charms?
 

@@ -1,2 +1,8 @@
 AI
 redeployments
+Cloudflare
+cloudflared
+cloudflare-configurator
+configurator
+nameserver
+Diataxis

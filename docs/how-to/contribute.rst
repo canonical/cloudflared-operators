@@ -16,7 +16,7 @@ How to contribute
 .. TODO: Update the links to point to the correct repo!!
          Is the documentation hosted on Charmhub or RTD? Include a link
 
-Our documentation is hosted on Read the Docs <https://cloudflared-operators.readthedocs.io/> to enable collaboration.
+Our documentation is hosted on the project documentation on GitHub <https://github.com/canonical/cloudflared-operators/tree/main/docs> to enable collaboration.
 Please use the links on each documentation page to either
 directly change something you see that's wrong, ask a question, or make a suggestion
 about a potential change.

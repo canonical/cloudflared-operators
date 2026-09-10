@@ -30,7 +30,7 @@ When contributing, you must abide by the
 ## Changelog
 
 Please ensure that any new feature, fix, or significant change is documented by
-adding an entry to the [CHANGELOG.md](https://github.com/canonical/cloudflared-operators/blob/main/CHANGELOG.md) file. Use the date of the
+adding an entry to the [CHANGELOG.md](https://github.com/canonical/cloudflared-operators/blob/main/cloudflared-operator/CHANGELOG.md) file. Use the date of the
 contribution as the header for new entries.
 
 To learn more about changelog best practices, visit [Keep a Changelog](https://keepachangelog.com/).

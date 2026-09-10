@@ -19,7 +19,7 @@ Release policy and schedule
 ----------------------------
 
 ..
-   Use this section to define a schedule at which we publish release notes for this charm. 
+   Use this section to define a schedule at which we publish release notes for this charm.
    Please adopt one of the following release patterns:
    - Fixed release schedule (monthly, bimonthly, etc.)
    - Release notes with every revision of the latest track

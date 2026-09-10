@@ -10,10 +10,16 @@ Cloudflared operator
 
 .. vale Canonical.007-Headings-sentence-case = YES
 
+.. TODO: A single sentence that says what the product is, succinctly and memorably.
+   Add a 1-2 sentence description of what the charm software does.
+
    Add a 1-2 sentence description of what the charm software does.
 
 A `Juju <https://juju.is/>`_ `charm <https://documentation.ubuntu.com/juju/3.6/reference/charm/>`_
 deploying and managing Cloudflare Tunnels on Kubernetes.
+
+.. TODO: A paragraph of 2-5 short sentences, that describes what the product does
+   and what need the product meets.
 
 Like any Juju charm, this charm supports one-line deployment, configuration, integration,
 scaling, and more.
@@ -22,6 +28,9 @@ For the cloudflared and cloudflare-configurator charms, this includes:
 * Securely exposing internal applications to the internet via Cloudflare Tunnels.
 * Centralized configuration management for tunnel routing, DNS, and ingress.
 * Seamless integration with the Juju ecosystem and Kubernetes workloads.
+
+.. TODO: Finally, a paragraph that describes whom the product is useful for.
+
 
 These charms will make operating Cloudflare Tunnels simple and straightforward for DevOps or
 SRE teams through Juju's clean interface.

@@ -24,7 +24,7 @@ The ``cloudflare-configurator`` charm handles the public-facing domain and routi
      - Description
    * - ``domain``
      - String
-     - The public hostname (e.g., ``app.example.com``) that your application will be exposed on via
+     - The public hostname (for example, ``app.example.com``) that your application will be exposed on via
        Cloudflare.
    * - ``nameserver``
      - String

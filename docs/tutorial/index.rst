@@ -6,8 +6,6 @@
 Tutorial
 ========
 
-.. TODO: Update the charm name, and check that the toctree entries are up-to-date.
-
 This section contains a step-by-step guide to help you start exploring
 how to install and use the cloudflared operator. Our tutorials aim to
 provide an end-to-end learning experience as you get started with the charm.
@@ -29,8 +27,7 @@ Advanced tutorial
 -----------------
 
 .. TODO: Update section name, and provide a specific summary of the advanced tutorial.
-         Remove this section if there's no advanced tutorial.
-
+            Remove this section if there's no advanced tutorial.
 Now that you have a basic deployment, learn more about what you can do with it!
 
 .. toctree::

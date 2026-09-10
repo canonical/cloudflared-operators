@@ -48,6 +48,12 @@ The ``cloudflare-configurator`` charm passes configuration data to the ``cloudfl
 
    juju integrate cloudflared-k8s:cloudflared-route cloudflare-configurator-k8s:cloudflared-route
 
+   Run ``juju status`` to check the current status of the deployment.
+The output should be similar to the following:
+
+.. TODO: Add the output of juju status into a command block, showing a successful deployment.
+         If using the starter pack, use the terminal directive: https://github.com/canonical/sphinx-terminal/blob/main/README.md
+
 Verify the deployment
 ---------------------
 
@@ -62,14 +68,16 @@ The deployment is finished when the status for both applications shows as ``acti
 Clean up the environment
 ------------------------
 
-To remove the tutorial environment and free up resources, delete the Juju model:
+You have successfully deployed and integrated the ``cloudflared`` and ``cloudflare-configurator`` charms to establish a secure Cloudflare Tunnel on your Kubernetes cluster.
 
-.. code-block:: bash
-
-   juju destroy-model cloudflare-tutorial --destroy-storage --force
+You can clean up your environment by following this guide:
+`Tear down your test environment <https://documentation.ubuntu.com/juju/3.6/howto/manage-your-juju-deployment/tear-down-your-juju-deployment-local-testing-and-development/>`_
 
 Next steps
 ----------
+
+You achieved a basic deployment of the charm. If you want to go farther in your deployment
+or learn more about the charm, check out these pages:
 
 - Learn how to :ref:`configure custom DNS settings <how_to_configure_dns>`.
 - Learn how to :ref:`expose a front-end application <how_to_expose_frontend>`.
