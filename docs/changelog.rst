@@ -1,5 +1,5 @@
 .. meta::
-   :description: View the changelog for the cloudflared charm, including all versions and changes.
+   :description: View the project changelog for the Cloudflared Operators charms and their changes.
 
 .. _changelog:
 

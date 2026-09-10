@@ -30,8 +30,8 @@ workload over ``cloudflared-route``.
    * - ``nameserver``
      - String
      - Optional DNS server for resolving origin names. If unset, the charm
-       attempts to resolve ``kube-dns.kube-system.svc`` and the workload falls
-       back to the host resolver when that lookup is unavailable.
+       attempts to resolve ``kube-dns.kube-system.svc``. Set this option
+       explicitly when that service is not resolvable in the deployment model.
    * - ``tunnel-token``
      - Secret
      - A Juju secret containing a ``tunnel-token`` key. Grant the secret to

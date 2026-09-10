@@ -107,7 +107,7 @@ To make contributions to this charm, you'll need a working
 The code for this charm can be downloaded as follows:
 
 ```
-git clone https://github.com/canonical/cloudflared
+git clone https://github.com/canonical/cloudflared-operators
 ```
 
 Make sure to install [`uv`](https://docs.astral.sh/uv/). For example, you can install `uv` on Ubuntu using:
@@ -145,42 +145,33 @@ that can be used for linting and formatting code when you're preparing contribut
 * ``tox -e unit``: Runs the unit tests.
 * ``tox -e integration``: Runs the integration tests.
 
-### Build the rock and charm
+### Build the charms
 
-Use [Rockcraft](https://documentation.ubuntu.com/rockcraft/stable/) to create an
-OCI image for the cloudflared app, and then upload the image to a MicroK8s registry,
-which stores OCI archives so they can be downloaded and deployed.
-
-Enable the MicroK8s registry:
-
-```bash
-microk8s enable registry
-```
-
-The following commands pack the OCI image and push it into
-the MicroK8s registry:
+Each charm project contains a ``charmcraft.yaml``. Pack the charms from their
+respective directories:
 
 ```bash
 cd cloudflared-operator
-rockcraft pack
-skopeo --insecure-policy copy --dest-tls-verify=false oci-archive:cloudflared.rock docker://localhost:32000/cloudflared:latest
-```
-
-Build the charm in this git repository using:
-
-```shell
+charmcraft pack
+cd ../cloudflare-configurator-operator
 charmcraft pack
 ```
 
+The ``charmed-cloudflared`` workload is maintained separately under
+``charmed-cloudflared-snap`` and is not an OCI image or Rockcraft project.
+
 ### Deploy
+
+For a model deployment, use the charms from Charmhub:
 
 ```bash
 # Create a model
 juju add-model charm-dev
 # Enable DEBUG logging
 juju model-config logging-config="<root>=INFO;unit=DEBUG"
-# Deploy the charm
-juju deploy ./cloudflared.charm
+# Deploy the charms
+juju deploy cloudflared
+juju deploy cloudflare-configurator
 ```
 
 

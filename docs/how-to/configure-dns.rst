@@ -6,13 +6,12 @@
 How to configure DNS
 ====================
 
-By default, the ``cloudflare-configurator`` charm tries to resolve the
-Kubernetes DNS service, ``kube-dns.kube-system.svc``. If the lookup is not
-available on a machine cloud, ``cloudflared`` uses the host resolver
-configuration instead.
+The ``cloudflare-configurator`` charm tries to resolve the Kubernetes DNS
+service, ``kube-dns.kube-system.svc``, when ``nameserver`` is unset. On a
+machine cloud where that name is not resolvable, configure ``nameserver``
+explicitly rather than relying on an automatic host-resolver fallback.
 
-If the tunnel must resolve names through a specific external or internal DNS
-server, override the default with the ``nameserver`` option. This guide assumes
+This guide assumes
 that the ``cloudflared`` and ``cloudflare-configurator`` charms are deployed and
 integrated.
 
