@@ -1,19 +1,19 @@
 .. meta::
-   :description: Reference documentation for configurations available in the cloudflared and
-                 cloudflare-configurator charms.
+   :description: Reference documentation for configurations available in the Cloudflared charms.
 
 .. _reference_configurations:
 
 Configurations
 ==============
 
-This page details the configuration options available for the charms in the 
-``cloudflared-operators`` repository.
+This page details the configuration options available for the
+``cloudflared`` and ``cloudflare-configurator`` charms.
 
 cloudflare-configurator
 -----------------------
 
-The ``cloudflare-configurator`` charm handles the public-facing domain and routing logic.
+The configurator manages the public hostname and sends tunnel settings to the
+workload over ``cloudflared-route``.
 
 .. list-table::
    :widths: 20 15 65
@@ -24,25 +24,42 @@ The ``cloudflare-configurator`` charm handles the public-facing domain and routi
      - Description
    * - ``domain``
      - String
-     - The public hostname (e.g., ``app.example.com``) that your application will be exposed on via
-       Cloudflare.
+     - The public hostname to publish through the ``ingress`` relation. Both
+       ``domain`` and ``tunnel-token`` are required before the configurator
+       publishes or sends route data.
    * - ``nameserver``
      - String
-     - The DNS server the tunnel should use for resolving internal service names. If not provided,
-       the charm defaults to the Kubernetes cluster's internal DNS (``kube-dns.kube-system.svc``).
+     - Optional DNS server for resolving origin names. If unset, the charm
+       attempts to resolve ``kube-dns.kube-system.svc``. Set this option
+       explicitly when that service is not resolvable in the deployment model.
    * - ``tunnel-token``
-     - String
-     - The authentication token required to connect the tunnel to your Cloudflare Zero Trust
-       account. Both ``domain`` and ``tunnel-token`` must be set for the route to become active.
+     - Secret
+     - A Juju secret containing a ``tunnel-token`` key. Grant the secret to
+       ``cloudflare-configurator`` before setting this option.
 
 cloudflared
 -----------
 
-The ``cloudflared`` subordinate charm manages the tunnel workload. It primarily consumes
-configurations from the ``cloudflare-configurator`` charm via relations (such as the
-``nameserver`` passed to its ``resolv.conf``), but it also supports specific workload 
-configurations if needed.
+The ``cloudflared`` subordinate consumes tunnel settings from the
+``cloudflared-route`` relation. It can also be configured directly when no
+route provider is used:
+
+.. list-table::
+   :widths: 35 15 50
+   :header-rows: 1
+
+   * - Key
+     - Type
+     - Description
+   * - ``tunnel-token``
+     - Secret
+     - A Juju secret containing a ``tunnel-token`` key. This option cannot be
+       used at the same time as a ``cloudflared-route`` relation.
+   * - ``charmed-cloudflared-snap-channel``
+     - String
+     - Channel used for the installed ``charmed-cloudflared`` snap. The
+       default is ``latest/stable``.
 
 .. seealso::
-   
-   Read more about configurations in the Juju docs: `Configuration <https://documentation.ubuntu.com/juju/latest/user/reference/configuration/>`_
+
+   Read more about configurations in the Juju docs: `Configuration <https://documentation.ubuntu.com/juju/latest/user/reference/configuration/>`_.

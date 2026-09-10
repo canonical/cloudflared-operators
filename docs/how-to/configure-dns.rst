@@ -6,32 +6,38 @@
 How to configure DNS
 ====================
 
-By default, the ``cloudflared`` charm uses the Kubernetes cluster's internal DNS 
-(``kube-dns.kube-system.svc``) to resolve internal service names when routing traffic from
-Cloudflare to your applications.
+The ``cloudflare-configurator`` charm tries to resolve the Kubernetes DNS
+service, ``kube-dns.kube-system.svc``, when ``nameserver`` is unset. On a
+machine cloud where that name is not resolvable, configure ``nameserver``
+explicitly rather than relying on an automatic host-resolver fallback.
 
-If your architecture requires the tunnel to resolve names using a specific external DNS server or a
-custom internal DNS, you can override this behavior using the ``cloudflare-configurator`` charm.
-This guide assumes that you've already deployed and integrated the ``cloudflared`` and
-``cloudeflare-configurator`` charms.
+This guide assumes
+that the ``cloudflared`` and ``cloudflare-configurator`` charms are deployed and
+integrated.
 
-To configure a custom DNS resolver, set the ``nameserver`` configuration option on the
-``cloudflare-configurator`` charm:
+Set a custom DNS resolver
+-------------------------
+
+Configure the resolver on ``cloudflare-configurator``:
 
 .. code-block:: bash
 
    juju config cloudflare-configurator nameserver=8.8.8.8
 
-After you run this configuration, the nameserver is set as follows:
+After this configuration:
 
-1. The ``cloudflare-configurator`` charm passes the configured nameserver to the ``cloudflared``
-charm via the ``cloudflared-route`` relation.
-2. The ``cloudflared`` charm writes this nameserver into a dedicated ``resolv.conf`` file located
-at ``/var/snap/charmed-cloudflared/current/etc/resolv.conf``.
-3. The ``cloudflared`` snap instance uses this configuration to resolve domain names when
-establishing routes to your internal services.
+1. ``cloudflare-configurator`` sends the nameserver to ``cloudflared`` through
+   the ``cloudflared-route`` relation.
+2. ``cloudflared`` writes it to the resolver file for each installed
+   ``charmed-cloudflared`` snap instance.
+3. The snap instance uses the resolver when resolving names for its tunnel.
 
-To revert to the default Kubernetes DNS, simply unset the configuration:
+The instance path is based on the tunnel source. Direct configuration uses the
+``charmed-cloudflared_config0`` instance, while relation-backed tunnels use an
+instance named with the relation ID. The resolver file is stored under
+``/var/snap/<instance>/current/etc/resolv.conf``.
+
+To return to the default behavior, unset the option:
 
 .. code-block:: bash
 

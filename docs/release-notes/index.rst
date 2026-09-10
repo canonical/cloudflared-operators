@@ -1,32 +1,28 @@
 .. meta::
-   :description: Release notes for all versions of the __charm_name__ charm, including release policy and schedule.
+   :description: Release notes for the Cloudflared charms, including upgrade information.
 
 .. _release_notes_index:
-
-.. Remember to update this file for your charm -- replace __charm_name__ with the appropriate name,
-   specify the track the release notes will follow, and include a link on how to upgrade.
 
 Release notes
 =============
 
-Release notes for the <main> track of __charm_name__, summarizing new features,
-bug fixes and backwards-incompatible changes in each revision.
-
-For upgrading the charm, see :ref:`How to upgrade <how_to_upgrade>`.
-For instructions on a specific release, see the corresponding release notes.
+These release notes summarize user-visible changes to the ``cloudflared`` and
+``cloudflare-configurator`` charms. For upgrade instructions, see
+:ref:`How to upgrade <how_to_upgrade>`.
 
 Release policy and schedule
-----------------------------
+---------------------------
 
-..
-   Use this section to define a schedule at which we publish release notes for this charm. 
-   Please adopt one of the following release patterns:
-   - Fixed release schedule (monthly, bimonthly, etc.)
-   - Release notes with every revision of the <main> track
-   - Release notes published when there's a need (maintenance, bug fixes, etc.)
+Release notes are published when a charm release contains a feature, bug fix,
+security update, or other user-visible change.
 
 Releases
 --------
 
-.. TODO: Add a list of releases here, with links to the individual release notes.
-         Use a toctree directive
+The per-charm changelogs are the current release history:
+
+* `cloudflared changelog <https://github.com/canonical/cloudflared-operators/blob/main/cloudflared-operator/CHANGELOG.md>`_.
+* `cloudflare-configurator changelog <https://github.com/canonical/cloudflared-operators/blob/main/cloudflare-configurator-operator/CHANGELOG.md>`_.
+
+Individual RST release pages can be added to this section and included in a
+table of contents when published.
