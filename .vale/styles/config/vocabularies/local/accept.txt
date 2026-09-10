@@ -1,8 +1,8 @@
 AI
-redeployments
 Cloudflare
-cloudflared
 cloudflare-configurator
+cloudflared
 configurator
-nameserver
 Diataxis
+nameserver
+redeployments

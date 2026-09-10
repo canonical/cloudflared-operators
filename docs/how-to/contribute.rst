@@ -6,8 +6,10 @@
 How to contribute
 =================
 
-See the repository's `CONTRIBUTING.md <https://github.com/canonical/cloudflared-operators/blob/main/CONTRIBUTING.md>`_
-for information on contributing to the source code.
+.. note::
+
+   See `CONTRIBUTING.md <https://github.com/canonical/cloudflared-operators/blob/main/CONTRIBUTING.md>`_
+   for information on contributing to the source code.
 
 The documentation source is maintained in the `cloudflared-operators repository
 <https://github.com/canonical/cloudflared-operators/tree/main/docs>`_.

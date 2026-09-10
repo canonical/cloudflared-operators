@@ -23,10 +23,10 @@ and verifies the resulting Juju status.
 
     Deploy the charms for the first time <basic-deployment>
 
-Advanced operations
--------------------
+Advanced deployment
+--------------------
 
-After completing the basic deployment, use the advanced guide to configure
+After completing the basic deployment, use the advanced deployment guide to configure
 multiple tunnel relations, custom DNS resolution, snap channels, and COS
 metrics.
 
@@ -34,4 +34,4 @@ metrics.
     :hidden:
     :maxdepth: 1
 
-    Advanced operations <advanced-deployment>
+    Advanced deployment <advanced-deployment>

@@ -10,11 +10,10 @@ The repository contains two charms. ``cloudflare-configurator`` manages
 configuration, while ``cloudflared`` is a subordinate machine charm that runs
 the ``charmed-cloudflared`` snap on the principal application's machine.
 
-The ``cloudflared`` charm does not run a Pebble workload container. On install
-and configuration changes it manages parallel snap instances, updates their
-resolver and CA certificate files, and restarts the snap services when needed.
-A relation-backed deployment creates one snap instance for each active
-``cloudflared-route`` relation.
+On install and configuration changes, the ``cloudflared`` charm manages parallel
+snap instances, updates their resolver and CA certificate files, and restarts
+the snap services when needed. A relation-backed deployment creates one snap
+instance for each active ``cloudflared-route`` relation.
 
 Charm code overview
 -------------------
