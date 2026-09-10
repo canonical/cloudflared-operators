@@ -1,83 +1,117 @@
+.. meta::
+   :description: Deploy and integrate the cloudflared and cloudflare-configurator Juju charms.
+
 .. _tutorial_basic_deployment:
 
-Deploy the cloudflared and cloudflare-configurator charms
-=========================================================
+Deploy the cloudflared charms
+==============================
 
-This tutorial guides you through deploying the ``cloudflared`` and ``cloudflare-configurator`` charms on a Kubernetes environment using Juju.
+This tutorial deploys the ``cloudflared`` subordinate machine charm and the
+``cloudflare-configurator`` charm. It assumes that a principal application
+named ``frontend`` is already deployed in a machine-cloud model and provides
+``juju-info`` while requiring ``ingress``.
 
 What you'll do
 --------------
 
-1. Deploy the ``cloudflared`` workload charm.
-2. Deploy the ``cloudflare-configurator`` charm.
-3. Integrate the two charms.
-4. Verify the deployment status.
+1. Create an isolated Juju model.
+2. Deploy both Cloudflare charms.
+3. Integrate the charms with the ``frontend`` application.
+4. Configure the tunnel secret and public hostname.
+5. Verify the deployment status.
 
 What you'll need
 ----------------
 
-- A working workstation with AMD64 architecture.
-- Juju 3.x installed.
-- MicroK8s 1.28+ installed and running.
+- Juju 3.x connected to a controller with a machine cloud.
+- A machine where the subordinate ``cloudflared`` charm can run.
+- A principal application named ``frontend`` that provides ``juju-info`` and
+  requires ``ingress``.
+- A Cloudflare Tunnel token in the ``CLOUDFLARE_TUNNEL_TOKEN`` environment
+  variable.
+- A hostname in the Cloudflare zone in ``CLOUDFLARE_PUBLIC_HOSTNAME``.
 
 Set up the environment
 ----------------------
 
-Create a new Juju model to isolate this tutorial's workload:
+Create and select a model for this tutorial:
 
 .. code-block:: bash
 
    juju add-model cloudflare-tutorial
+   juju switch cloudflare-tutorial
 
 Deploy the charms
 -----------------
 
-Deploy the ``cloudflared`` and ``cloudflare-configurator`` charms from Charmhub:
+Deploy both charms from Charmhub:
 
 .. code-block:: bash
 
-   juju deploy cloudflared-k8s
-   juju deploy cloudflare-configurator-k8s
+   juju deploy cloudflared
+   juju deploy cloudflare-configurator
 
 Integrate the charms
 --------------------
 
-The ``cloudflare-configurator`` charm passes configuration data to the ``cloudflared`` charm via the ``cloudflared-route`` relation. Integrate them using the following command:
+Attach the subordinate and connect the configurator to the frontend and
+workload charms:
 
 .. code-block:: bash
 
-   juju integrate cloudflared-k8s:cloudflared-route cloudflare-configurator-k8s:cloudflared-route
+   juju integrate frontend:juju-info cloudflared:juju-info
+   juju integrate frontend:ingress cloudflare-configurator:ingress
+   juju integrate cloudflared:cloudflared-route cloudflare-configurator:cloudflared-route
 
-   Run ``juju status`` to check the current status of the deployment.
-The output should be similar to the following:
+Configure the tunnel
+--------------------
 
-.. TODO: Add the output of juju status into a command block, showing a successful deployment.
-         If using the starter pack, use the terminal directive: https://github.com/canonical/sphinx-terminal/blob/main/README.md
+Create a Juju secret, grant it to the configurator, and configure the hostname:
+
+.. code-block:: bash
+
+   secret_id="$(juju add-secret cloudflare-tunnel tunnel-token="$CLOUDFLARE_TUNNEL_TOKEN" | awk '/secret:/ {print $1}')"
+   juju grant-secret "$secret_id" cloudflare-configurator
+   juju config cloudflare-configurator tunnel-token="$secret_id" domain="$CLOUDFLARE_PUBLIC_HOSTNAME"
 
 Verify the deployment
 ---------------------
 
-Run ``juju status`` to check the current status of the deployment:
+Run ``juju status`` to check the current status and relations:
 
 .. code-block:: bash
 
-   juju status --watch 5s
+   juju status --relations
 
-The deployment is finished when the status for both applications shows as ``active`` and the workload status indicates that the tunnel configuration has been applied.
+A healthy deployment has the subordinate attached to ``frontend``, an active
+configurator unit, and connected ``cloudflared-route`` and ``ingress``
+relations. The exact unit addresses and machine IDs depend on the model. A
+successful status has the following shape:
+
+.. code-block:: text
+
+   App                     Version  Status  Scale  Charm
+   cloudflare-configurator          active      1  cloudflare-configurator
+   cloudflared                       active      1  cloudflared
+   frontend                          active      1  frontend
+
+   Relation                      Provides                 Consumes
+   cloudflared-route             cloudflare-configurator  cloudflared
+   ingress                       cloudflare-configurator  frontend
+   juju-info                     frontend                  cloudflared
 
 Clean up the environment
 ------------------------
 
-You have successfully deployed and integrated the ``cloudflared`` and ``cloudflare-configurator`` charms to establish a secure Cloudflare Tunnel on your Kubernetes cluster.
+Destroy the model when you finish:
 
-You can clean up your environment by following this guide:
-`Tear down your test environment <https://documentation.ubuntu.com/juju/3.6/howto/manage-your-juju-deployment/tear-down-your-juju-deployment-local-testing-and-development/>`_
+.. code-block:: bash
+
+   juju destroy-model cloudflare-tutorial --destroy-storage --force
 
 Next steps
 ----------
 
-You achieved a basic deployment of the charm. If you want to go farther in your deployment
-or learn more about the charm, check out these pages:
-
 - Learn how to :ref:`configure custom DNS settings <how_to_configure_dns>`.
 - Learn how to :ref:`expose a front-end application <how_to_expose_frontend>`.
+- Learn how to :ref:`use the configurator charm <how_to_use_configurator>`.

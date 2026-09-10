@@ -1,18 +1,24 @@
 .. meta::
-   :description: Reference documentation for all Juju events observed by the cloudflared charm.
+   :description: Reference documentation for Juju events observed by the Cloudflared charms.
 
 .. _reference_juju_events:
 
 Juju events
 ===========
 
-For this charm, the following Juju events are observed:
+The ``cloudflared`` charm observes and reconciles these events:
 
-.. TODO: Fill in the information.
-   Numbered list of Juju events. Link to describe the event in more detail
-   (either in Juju docs or in a specific charm's docs). 
-   When is the event fired? What does the event indicate/mean?
+* ``install`` enables parallel snap instances.
+* ``config-changed`` and ``secret-changed`` recalculate tunnel specifications.
+* ``cloudflared-route-relation-changed`` applies tunnel tokens and nameservers.
+* ``cloudflared-route-relation-departed`` removes instances for departed
+  relation-backed tunnels.
+* ``juju-info-relation-changed`` attaches the subordinate to a principal.
+* ``juju-info-relation-departed`` removes subordinate workload state.
+* ``juju-info-relation-broken`` stops the workload when the principal is gone.
+* ``stop`` removes installed ``charmed-cloudflared`` snap instances.
 
-   Add a note or seealso admonition with the information below.
-   If using the starter pack, replace the link with intersphinx.
-   See more in the Juju docs: `Hook <https://documentation.ubuntu.com/juju/latest/user/reference/hook/>`_
+The ``cloudflare-configurator`` charm observes ``config-changed``, ingress data
+changes, ``cloudflared-route`` relation changes, and the
+``get-ingress-data`` action. Its reconciliation requires both ``domain`` and
+``tunnel-token`` before it publishes or sends tunnel data.

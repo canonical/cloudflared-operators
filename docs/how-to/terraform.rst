@@ -1,25 +1,16 @@
 .. meta::
-   :description: How to deploy and manage the cloudflared charm using Terraform modules.
+   :description: Terraform support for the Cloudflared charms.
 
 .. _how_to_terraform:
 
 How to use Terraform
 ====================
 
-.. TODO: Remember to update this file for your charm!!
-         If applicable, use this placeholder to provide instructions on
-         how to use Terraform with this charm.
-         Reference the Terraform modules in this repo with information on
-         how to update or manage the deployment (feel free to link to upstream docs).
-         If there are no Terraform management for this charm, remove this page.
-         You don't need to duplicate upstream Terraform documentation in this guide.
+This repository does not currently contain Terraform modules or ``.tf`` files.
+Deploy and relate the charms with Juju as described in the
+:ref:`basic deployment tutorial <tutorial_basic_deployment>`.
 
-         Suggested structure and content for this guide:
-         * Point to public Terraform files provided in the code repository, including
-           a link to the generated README file.
-         * Terraform plan: Provide instructions on how the user can put together
-           a Terraform plan based on the provided files. Explicitly mention any required
-           integrations or configurations.
-         * Apply the plan: Provide instructions to apply the plan, explicitly
-           mentioning that applying the plan will deploy the entire "product" or
-           collection of charms.
+If a Terraform module is added later, document its source directory, required
+Juju model, secret handling, and relation resources here. Do not put tunnel
+tokens directly into Terraform configuration or state without following the
+secret-management guidance for the chosen provider.

@@ -1,30 +1,64 @@
+.. meta::
+   :description: Configure Cloudflare Tunnel credentials, DNS, and ingress with the cloudflare-configurator charm.
+
 .. _how_to_use_configurator:
 
 Use the cloudflare-configurator charm
 =====================================
 
-The ``cloudflare-configurator`` charm acts as a centralized configuration manager for the ``cloudflared`` charm. Instead of configuring the workload charm directly, you configure the ``cloudflare-configurator``, which safely passes settings (like DNS nameservers, ingress rules, and tunnel credentials) to ``cloudflared`` via the ``cloudflared-route`` relation.
+The ``cloudflare-configurator`` charm manages the settings consumed by the
+``cloudflared`` subordinate. It sends the tunnel token and optional DNS
+resolver across ``cloudflared-route`` and publishes the configured public URL
+through ``ingress``.
 
 Prerequisites
 -------------
 
-You must have both the ``cloudflared`` and ``cloudflare-configurator`` charms deployed and integrated. If you haven't done this yet, follow the :ref:`Basic Deployment Tutorial <tutorial_basic_deployment>`.
+Deploy and integrate both charms. The :ref:`basic deployment tutorial
+<tutorial_basic_deployment>` shows the complete relation setup.
 
-Update tunnel configurations
-----------------------------
+Set the public hostname
+-----------------------
 
-To update the configuration for your Cloudflare Tunnel, apply the settings to the ``cloudflare-configurator`` charm.
-
-For example, to update custom headers or routing metrics, use the ``juju config`` command:
+Set the hostname that should be published to the related frontend application:
 
 .. code-block:: bash
 
-   juju config cloudflare-configurator-k8s nameserver=8.8.8.8
+   juju config cloudflare-configurator domain="$CLOUDFLARE_PUBLIC_HOSTNAME"
 
-Once the configuration is applied, the ``config-changed`` event will trigger. The configurator charm will format the data and pass it across the relation endpoint to the ``cloudflared`` charm, which will automatically reload the ``cloudflared`` daemon with the new settings.
+The configurator publishes the HTTPS hostname after both ``domain`` and
+``tunnel-token`` are configured.
 
-Managing tunnel credentials
----------------------------
+Configure DNS resolution
+------------------------
 
-If your architecture requires injecting a specific Cloudflare Tunnel token or certificate, you can provide it via the configurator charm's relation or configuration options. This ensures sensitive data is handled securely and passed to the workload container without modifying the workload charm's direct environment.
+Set ``nameserver`` when the tunnel must resolve origin names through a specific
+resolver:
 
+.. code-block:: bash
+
+   juju config cloudflare-configurator nameserver=8.8.8.8
+
+Unset the option to use the resolver configuration of the host machine when the
+Kubernetes DNS service is unavailable:
+
+.. code-block:: bash
+
+   juju config cloudflare-configurator nameserver=""
+
+Update tunnel credentials
+-------------------------
+
+The ``tunnel-token`` option must refer to a Juju secret containing a key named
+``tunnel-token``. Grant the secret to ``cloudflare-configurator`` before setting
+the option. For example, when ``CLOUDFLARE_TUNNEL_TOKEN`` is already set in
+the shell:
+
+.. code-block:: bash
+
+   secret_id="$(juju add-secret cloudflare-tunnel tunnel-token="$CLOUDFLARE_TUNNEL_TOKEN" | awk '/secret:/ {print $1}')"
+   juju grant-secret "$secret_id" cloudflare-configurator
+   juju config cloudflare-configurator tunnel-token="$secret_id"
+
+Do not put the token directly in a documentation example or public
+configuration file.

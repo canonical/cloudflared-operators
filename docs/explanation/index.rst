@@ -1,13 +1,13 @@
 .. meta::
-   :description: Conceptual guides explaining the design and security of the cloudflared charm.
+   :description: Conceptual guides explaining the design and security of the Cloudflared charms.
 
 .. _explanation_index:
 
 Explanation
 ===========
 
-The pages in this section provide additional context and deeper understanding
-of foundational topics and concepts related to the cloudflared charm.
+These pages provide context about the design, security boundaries, and
+operational model of the Cloudflared charms.
 
 .. vale Canonical.013-Spell-out-numbers-below-10 = NO
 
@@ -17,4 +17,3 @@ of foundational topics and concepts related to the cloudflared charm.
 
     Charm design overview <charm-design>
     Security overview <security>
-

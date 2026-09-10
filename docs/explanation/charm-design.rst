@@ -1,28 +1,22 @@
 .. meta::
-   :description: Understand the architectural design decisions and code structure of the cloudflared charm.
+   :description: Understand the architectural design decisions and code structure of the Cloudflared charms.
 
 .. _explanation_charm_design:
 
 Charm design
 ============
 
-.. TODO:
-   This document should offer perspective and opinion about the charm was designed,
-   and why those design decisions were made.
+The project separates tunnel execution from configuration management.
+``cloudflared`` is a subordinate machine charm. It attaches to a principal
+application through ``juju-info`` and manages one or more parallel
+``charmed-cloudflared`` snap instances on that machine.
 
-   Some guiding questions as you consider the content for this page:
-   * What are the user's questions about the charm? What are the use cases?
-   * What questions do you want the user to be asking about the charm and its design? Why would they want to read this document? What are the questions that this document is trying to answer?
-   * What sort of framing do the users need to understand this content?
-   * What is the relationship between the user and the charm (or its code)?
-   * What is the starting point for the user's thinking?
-   * How does the code come together to operate the underlying software/workload?
+The ``cloudflare-configurator`` charm is the configuration provider. It reads the
+public ``domain``, optional ``nameserver``, and the Juju secret named by
+``tunnel-token``. It sends the tunnel token and resolver through
+``cloudflared-route`` and publishes the configured HTTPS URL through ``ingress``.
 
-   There's no specific template or structure to follow here -- you should provide your
-   own perspective about the charm design. If a Mermaid diagram of the charm would enhance
-   the text, then include it in this document.
-
-   Some guiding points on the Mermaid diagram:
-   Limit the scope of this diagram to the charm only.
-   How is the charm containerized, and what pieces are of particular interest to the user?
-   Include those separate pieces in this diagram.
+This design keeps secret and routing configuration in one charm while allowing
+the workload charm to remain reusable with either a relation provider or its
+direct ``tunnel-token`` configuration. The Cloudflare-side origin route is
+outside the charm boundary and remains managed through Cloudflare.

@@ -1,14 +1,11 @@
 .. meta::
-   :description: Technical reference for the Terraform module available for deploying the cloudflared charm.
+   :description: Terraform support for deploying the Cloudflared charms.
 
 .. _reference_terraform:
 
 Terraform module
 ================
 
-.. Note: Add technical details and information about any Terraform modules used in this repo.
-         Remove if there is no Terraform module in the repo.
-         You don't necessarily need to copy the Terraform module into this document,
-         but you should provide some information about the setup, other charms deployed,
-         or other configurations/settings handled by the module.
-         Add a link to any generated README files for Terraform modules in the codebase.
+This repository does not currently include Terraform modules or ``.tf`` files.
+Deploy and integrate the charms with Juju as described in the
+:ref:`basic deployment tutorial <tutorial_basic_deployment>`.

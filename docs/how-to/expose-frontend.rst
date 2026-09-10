@@ -1,36 +1,49 @@
+.. meta::
+   :description: Expose an application through a Cloudflare Tunnel managed by Juju.
+
 .. _how_to_expose_frontend:
 
 Expose a front-end application
 ==============================
 
-Cloudflare Tunnels allow you to securely expose internal applications to the public internet without opening public ingress ports on your firewall. This guide explains how to expose a front-end web application (such as a React, Vue, or static HTML server) running inside your Kubernetes cluster.
+The ``cloudflare-configurator`` charm publishes a public URL to a frontend
+application through its ``ingress`` relation. The ``cloudflared`` subordinate
+runs the Cloudflare Tunnel process on the principal application's machine.
+Cloudflare-side DNS and origin routing remain part of the tunnel setup.
 
 Prerequisites
 -------------
 
-- A deployed front-end application charm (for example, an HTTP server or Nginx charm) running in the same Juju model.
-- The ``cloudflared`` and ``cloudflare-configurator`` charms deployed and integrated.
+- A deployed frontend application named ``frontend`` that requires the
+  ``ingress`` interface and provides ``juju-info``.
+- The ``cloudflared`` and ``cloudflare-configurator`` charms are deployed and
+  integrated.
+- A tunnel token is configured on ``cloudflare-configurator``.
 
-Define the ingress rule
+Set the public hostname
 -----------------------
 
-To route external traffic to your front-end application, you must define an ingress rule in the ``cloudflare-configurator`` charm. This rule maps a public hostname to the internal service name and port of your front-end app.
-
-Set the ingress configuration on the ``cloudflare-configurator`` charm. Replace ``frontend`` and ``8080`` with your actual application's service name and port:
+Store the hostname in ``CLOUDFLARE_PUBLIC_HOSTNAME`` and configure the
+charm:
 
 .. code-block:: bash
 
-   juju config cloudflare-configurator ingress='{
-     "hostname": "frontend.example.com",
-     "service": "http://frontend:8080"
-   }'
+   juju config cloudflare-configurator domain="$CLOUDFLARE_PUBLIC_HOSTNAME"
 
-*Note: The exact configuration key for ingress rules may vary based on your specific charm revision. Consult the :ref:`Configurations Reference <reference_configurations>` for the exact dictionary schema.*
+Connect the application to the configurator's ingress endpoint:
+
+.. code-block:: bash
+
+   juju integrate frontend:ingress cloudflare-configurator:ingress
+
+The configurator publishes the configured HTTPS hostname to the relation. The
+frontend application consumes that URL through its ingress provider.
 
 Verify external access
 ----------------------
 
-1. Ensure your DNS records in Cloudflare point ``frontend.example.com`` to your Cloudflare Tunnel's CNAME.
-2. Open a web browser and navigate to ``https://frontend.example.com``.
-3. The ``cloudflared`` daemon will intercept the traffic at the Cloudflare edge and securely route it through the tunnel to your front-end application pod.
-
+1. Configure the matching DNS record and origin route in Cloudflare.
+2. Confirm that the tunnel is connected in Cloudflare.
+3. Open the configured HTTPS hostname and verify that the frontend responds.
+4. If the request fails, run ``juju status --relations`` and check the
+   :ref:`troubleshooting guide <how_to_troubleshoot>`.

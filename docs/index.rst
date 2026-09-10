@@ -1,39 +1,27 @@
 .. meta::
-   :description: Discover the Cloudflared charm, a Juju operator that deploys and manages Cloudflared.
+   :description: Discover the Cloudflared charms, Juju operators for managing Cloudflare Tunnels.
 
 .. vale Canonical.007-Headings-sentence-case = NO
 
 .. _index:
 
 Cloudflared operator
-========================
+====================
 
 .. vale Canonical.007-Headings-sentence-case = YES
 
-.. TODO: A single sentence that says what the product is, succinctly and memorably.
-   Add a 1-2 sentence description of what the charm software does.
+The Cloudflared Operators project provides Juju charms for running and configuring
+Cloudflare Tunnels on machines managed by Juju.
 
-   Add a 1-2 sentence description of what the charm software does.
+The ``cloudflared`` subordinate charm runs the ``charmed-cloudflared`` snap on a
+principal application's machine. The ``cloudflare-configurator`` charm manages
+tunnel credentials, DNS settings, and the public URL published through the
+``ingress`` relation. Cloudflare-side origin routing remains configured in
+Cloudflare.
 
-A `Juju <https://juju.is/>`_ `charm <https://documentation.ubuntu.com/juju/3.6/reference/charm/>`_
-deploying and managing Cloudflare Tunnels on Kubernetes.
-
-.. TODO: A paragraph of 2-5 short sentences, that describes what the product does
-   and what need the product meets.
-
-Like any Juju charm, this charm supports one-line deployment, configuration, integration,
-scaling, and more.
-For the cloudflared and cloudflare-configurator charms, this includes:
-
-* Securely exposing internal applications to the internet via Cloudflare Tunnels.
-* Centralized configuration management for tunnel routing, DNS, and ingress.
-* Seamless integration with the Juju ecosystem and Kubernetes workloads.
-
-.. TODO: Finally, a paragraph that describes whom the product is useful for.
-
-
-These charms will make operating Cloudflare Tunnels simple and straightforward for DevOps or
-SRE teams through Juju's clean interface.
+These charms are useful to DevOps and SRE teams that want to manage Cloudflare
+Tunnel processes and their Juju integrations through a consistent operator
+interface.
 
 In this documentation
 ---------------------
@@ -54,37 +42,31 @@ In this documentation
     * - Design
       - :ref:`Architecture <reference_charm_architecture>` | :ref:`Design <explanation_charm_design>`
     * - Security
-      - :ref:`Overview <explanation_security>` | Relevant how-to guides | Relevant reference pages
+      - :ref:`Overview <explanation_security>` | :ref:`Configurations <reference_configurations>`
 
 How this documentation is organized
 ------------------------------------
 
 This documentation uses the `Diátaxis documentation structure <https://diataxis.fr/>`_.
 
-- The :ref:`Tutorial <tutorial_index>` takes you step-by-step through a basic deployment of the Cloudflare charms.
-- :ref:`How-to guides <how_to_index>` assume you have basic familiarity with the Cloudflare charms. Learn more about setting up, using, maintaining, and contributing to this charm.
-- :ref:`Reference <reference_index>` provides a guide to actions, configurations, relations, and other technical details.
-- :ref:`Explanation <explanation_index>` includes topic overviews, background and context and detailed discussion.
-- :ref:`Release notes <release_notes_index>` holds all the release notes for the charm, including any system or upgrade requirements.
+- The :ref:`Tutorial <tutorial_index>` takes you step-by-step through a basic deployment of the Cloudflared charms.
+- :ref:`How-to guides <how_to_index>` assume you have basic familiarity with the Cloudflared charms.
+- :ref:`Reference <reference_index>` provides actions, configurations, relations, and other technical details.
+- :ref:`Explanation <explanation_index>` includes design, security, and operational context.
+- :ref:`Release notes <release_notes_index>` holds release information and upgrade requirements.
 
 Contributing to this documentation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Documentation is an important part of this project, and we take the same open-source approach
-to the documentation as the code. As such, we welcome community contributions, suggestions, and
-constructive feedback on our documentation.
-See :ref:`How to contribute <how_to_contribute>` for more information.
-
-If there's a particular area of documentation that you'd like to see that's missing, please
-file a bug.
-
-.. TODO: Add link to GitHub issues page for "file a bug"
+Documentation is an important part of this project. See :ref:`How to contribute <how_to_contribute>`
+for contribution guidance. To report a missing topic or an error, open an issue in the
+`cloudflared-operators issue tracker <https://github.com/canonical/cloudflared-operators/issues>`_.
 
 Project and community
 ---------------------
 
-The cloudflared Operator is a member of the Ubuntu family. It's an open-source project that warmly welcomes community
-projects, contributions, suggestions, fixes, and constructive feedback.
+The cloudflared Operators project is a member of the Ubuntu family. It welcomes
+community projects, contributions, suggestions, fixes, and constructive feedback.
 
 Governance and policies
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -103,7 +85,7 @@ Releases
 
 - :ref:`Release notes <release_notes_index>`
 
-Thinking about using the cloudflared Operator for your next project?
+Thinking about using the Cloudflared Operators for your next project?
 `Get in touch <https://matrix.to/#/#charmhub-charmdev:ubuntu.com>`_!
 
 .. vale Canonical.013-Spell-out-numbers-below-10 = NO

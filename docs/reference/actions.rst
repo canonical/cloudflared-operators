@@ -1,54 +1,34 @@
-
 .. meta::
-   :description: Reference documentation for all actions available in the __charm_name__ charm.
+   :description: Reference documentation for actions provided by the cloudflare-configurator charm.
 
 .. _reference_actions:
 
 Actions
 =======
 
-.. TODO: Add link to the Charmhub actions tab.
+The ``cloudflare-configurator`` charm provides one action. The ``cloudflared``
+charm does not declare Juju actions.
 
-See Actions.
+Get ingress data
+----------------
 
-.. seealso::
-
-
-   Read more about actions in the Juju docs: `Action <https://documentation.ubuntu.com/juju/latest/user/reference/action/>`_
-
-The ``cloudflared`` charm provides several Juju actions to manage the lifecycle of your Cloudflare Tunnels directly from the command line.
-
-You can run these actions using the ``juju run`` command. For example:
+Run the action on the configurator leader:
 
 .. code-block:: bash
 
-   juju run cloudflared-k8s/leader get-ingress-data --param json
+   juju run cloudflare-configurator/0 get-ingress-data
 
-Available actions
------------------
+The action returns an ``ingress`` result containing a JSON string with:
 
-``create-tunnel``
-  Provisions a new Cloudflare Tunnel in your Cloudflare account.
+* ``application-data``: ingress data for the related application.
+* ``unit-data``: ingress data for related units, sorted by ``host``.
 
-  **Parameters:**
-  * ``tunnel-name`` (string, required): The desired name for the new tunnel.
-
-``delete-tunnel``
-  Permanently deletes an existing Cloudflare Tunnel.
-
-  **Parameters:**
-  * ``tunnel-id`` (string, required): The UUID of the tunnel to delete.
-
-``get-tunnel-token``
-  Retrieves the authentication token required for the ``cloudflared`` daemon to connect to the Cloudflare edge network. This token is automatically passed to the workload container upon creation.
-
-  **Parameters:**
-  * ``tunnel-id`` (string, required): The UUID of the tunnel.
-
-``list-tunnels``
-  Queries the Cloudflare API and returns a JSON list of all active tunnels associated with your Cloudflare account.
+The action fails with ``no ingress relation`` when the configurator has no
+related ingress application. See :ref:`How to get ingress relation data
+<how_to_get_ingress_data>` for a complete example.
 
 See also
 --------
 
-Read more about actions in the Juju docs: `Action <https://documentation.ubuntu.com/juju/latest/user/reference/action/>`_
+Read more about actions in the Juju docs: `Action <https://documentation.ubuntu.com/juju/latest/user/reference/action/>`_.
+See the `cloudflare-configurator actions on Charmhub <https://charmhub.io/cloudflare-configurator/actions>`_.

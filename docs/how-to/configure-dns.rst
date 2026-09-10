@@ -6,32 +6,28 @@
 How to configure DNS
 ====================
 
-By default, the ``cloudflared`` charm uses the Kubernetes cluster's internal DNS 
-(``kube-dns.kube-system.svc``) to resolve internal service names when routing traffic from
-Cloudflare to your applications.
+The configurator passes a configured nameserver to ``cloudflared`` through the
+``cloudflared-route`` relation. If no nameserver is configured, it tries to
+resolve ``kube-dns.kube-system.svc``. On a machine cloud where that name is not
+available, the workload uses the host resolver configuration.
 
-If your architecture requires the tunnel to resolve names using a specific external DNS server or a
-custom internal DNS, you can override this behavior using the ``cloudflare-configurator`` charm.
-This guide assumes that you've already deployed and integrated the ``cloudflared`` and
-``cloudeflare-configurator`` charms.
+This guide assumes that the ``cloudflared`` and ``cloudflare-configurator``
+charms are deployed and integrated.
 
-To configure a custom DNS resolver, set the ``nameserver`` configuration option on the
-``cloudflare-configurator`` charm:
+Set a custom resolver
+---------------------
+
+Set the ``nameserver`` option on the configurator:
 
 .. code-block:: bash
 
    juju config cloudflare-configurator nameserver=8.8.8.8
 
-After you run this configuration, the nameserver is set as follows:
+The workload writes the value into the resolver file for each installed snap
+instance. The instance name depends on whether it comes from direct
+configuration or a relation-backed tunnel.
 
-1. The ``cloudflare-configurator`` charm passes the configured nameserver to the ``cloudflared``
-charm via the ``cloudflared-route`` relation.
-2. The ``cloudflared`` charm writes this nameserver into a dedicated ``resolv.conf`` file located
-at ``/var/snap/charmed-cloudflared/current/etc/resolv.conf``.
-3. The ``cloudflared`` snap instance uses this configuration to resolve domain names when
-establishing routes to your internal services.
-
-To revert to the default Kubernetes DNS, simply unset the configuration:
+To return to the host resolver configuration, unset the option:
 
 .. code-block:: bash
 
