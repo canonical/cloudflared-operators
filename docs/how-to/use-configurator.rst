@@ -11,12 +11,6 @@ The ``cloudflare-configurator`` charm manages the settings consumed by the
 resolver across ``cloudflared-route`` and publishes the configured public URL
 through ``ingress``.
 
-Prerequisites
--------------
-
-Deploy and integrate both charms. The :ref:`basic deployment tutorial
-<tutorial_basic_deployment>` shows the complete relation setup.
-
 Set the public hostname
 -----------------------
 
