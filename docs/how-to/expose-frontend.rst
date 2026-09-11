@@ -1,5 +1,5 @@
 .. meta::
-   :description: Expose an application through a Cloudflare Tunnel managed by Juju.
+   :description: Learn how to expose an application through a Cloudflare Tunnel managed by Juju.
 
 .. _how_to_expose_frontend:
 

@@ -1,5 +1,5 @@
 .. meta::
-   :description: Troubleshoot common Cloudflared charm deployment and tunnel issues.
+   :description: Learn to troubleshoot common Cloudflared charm deployment and tunnel issues.
 
 .. _how_to_troubleshoot:
 

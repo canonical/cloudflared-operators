@@ -1,5 +1,5 @@
 .. meta::
-   :description: Integrate the cloudflared charm with the Canonical Observability Stack.
+   :description: Learn how to integrate the cloudflared charm with the Canonical Observability Stack.
 
 .. _how_to_integrate_with_cos:
 
