@@ -16,6 +16,7 @@ DNS and networking
    :maxdepth: 1
 
    Configure DNS <configure-dns>
+   Expose a front-end application <expose-frontend>
 
 Charm operations
 ----------------
@@ -29,6 +30,7 @@ Charm operations
    Redeploy <redeploy>
    Upgrade <upgrade>
    Get ingress data <get-ingress-data>
+   Use Terraform <terraform>
 
 Development and community
 -------------------------

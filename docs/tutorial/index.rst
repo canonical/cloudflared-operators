@@ -1,21 +1,19 @@
 .. meta::
-   :description: Follow step-by-step tutorials to deploy and operate the __charm_name__ charm. 
+   :description: Follow tutorials to deploy and operate the Cloudflared charms.
 
 .. _tutorial_index:
 
 Tutorial
 ========
 
-.. TODO: Update the charm name, and check that the toctree entries are up-to-date.
-
-This section contains a step-by-step guide to help you start exploring
-how to install and use the __charm_name__ operator. Our tutorials aim to
-provide an end-to-end learning experience as you get started with the charm.
+This section provides step-by-step guidance for deploying and operating the
+``cloudflared`` and ``cloudflare-configurator`` charms.
 
 Get started
 -----------
 
-This tutorial walks through a basic deployment of the charm.
+The basic tutorial deploys both charms, relates them to a principal application,
+and verifies the resulting Juju status.
 
 .. vale Canonical.013-Spell-out-numbers-below-10 = NO
 
@@ -23,18 +21,17 @@ This tutorial walks through a basic deployment of the charm.
     :hidden:
     :maxdepth: 1
 
-    Deploy the charm for the first time <basic-deployment>
+    Deploy the charms for the first time <basic-deployment>
 
-Advanced tutorial
------------------
+Advanced deployment
+--------------------
 
-.. TODO: Update section name, and provide a specific summary of the advanced tutorial.
-         Remove this section if there's no advanced tutorial.
-
-Now that you have a basic deployment, learn more about what you can do with it!
+After completing the basic deployment, use the advanced deployment guide to configure
+multiple tunnel relations, custom DNS resolution, snap channels, and COS
+metrics.
 
 .. toctree::
     :hidden:
     :maxdepth: 1
 
-    Advanced tutorial <advanced-deployment>
+    Advanced deployment <advanced-deployment>

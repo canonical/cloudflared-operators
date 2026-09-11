@@ -1,13 +1,16 @@
 .. meta::
-   :description: How to back up and restore the __charm_name__ charm and its associated data.
+   :description: How to back up and restore Cloudflared charm configuration.
 
 .. _how_to_back_up_restore:
 
 How to back up and restore
 ===========================
 
-.. TODO: Remember to update this file for your charm!! 
-    If applicable, use this placeholder to provide information on how to
-    back up and restore the charm. Some questions to answer:
-    * Does this charm have a database that needs to be backed up?
-    * Are there are upstream docs we can link here?
+The charms do not manage an application database or other persistent application
+data. A backup should preserve the Juju model definition, application
+configuration, relation topology, and the Cloudflare-side tunnel configuration.
+
+Keep the tunnel token in a Juju secret. Preserve the secret and its grant to
+``cloudflare-configurator`` without exporting the token into a public backup.
+When restoring into a new model, recreate the secret, grant it to the
+application, and reapply the ``domain`` and ``nameserver`` configuration.
