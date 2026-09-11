@@ -46,6 +46,8 @@ Kubernetes DNS service is unavailable:
 
    juju config cloudflare-configurator nameserver=""
 
+.. _how_to_update_tunnel_credentials:
+
 Update tunnel credentials
 -------------------------
 

@@ -18,7 +18,8 @@ Prerequisites
   ``ingress`` interface and provides ``juju-info``.
 - The ``cloudflared`` and ``cloudflare-configurator`` charms are deployed and
   integrated.
-- A tunnel token is configured on ``cloudflare-configurator``.
+- A tunnel token is configured on ``cloudflare-configurator``. See
+  :ref:`Update tunnel credentials <how_to_update_tunnel_credentials>`.
 
 Set the public hostname
 -----------------------
