@@ -15,9 +15,6 @@ This guide assumes
 that the ``cloudflared`` and ``cloudflare-configurator`` charms are deployed and
 integrated.
 
-Set a custom DNS resolver
--------------------------
-
 Configure the resolver on ``cloudflare-configurator``:
 
 .. code-block:: bash
