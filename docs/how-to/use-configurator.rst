@@ -14,7 +14,8 @@ through ``ingress``.
 Set the public hostname
 -----------------------
 
-Set the hostname that should be published to the related frontend application:
+Save the hostname that should be published to the related frontend application to
+``CLOUDFLARE_PUBLIC_HOSTNAME``, then set the hostname:
 
 .. code-block:: bash
 
