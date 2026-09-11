@@ -57,5 +57,4 @@ the shell:
    juju grant-secret "$secret_id" cloudflare-configurator
    juju config cloudflare-configurator tunnel-token="$secret_id"
 
-Do not put the token directly in a documentation example or public
-configuration file.
+Do not put the token directly in a public configuration file.

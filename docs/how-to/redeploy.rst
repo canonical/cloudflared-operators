@@ -1,5 +1,5 @@
 .. meta::
-   :description: How to redeploy the Cloudflared charms in a new Juju model.
+   :description: Learn how to redeploy the Cloudflared charms in a new Juju model.
 
 .. _how_to_redeploy:
 
