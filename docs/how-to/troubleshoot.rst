@@ -17,7 +17,7 @@ Check the following conditions:
 
 * ``cloudflared`` must have an active ``juju-info`` relation to a principal
   application.
-* ``cloudflared-route`` must be related, unless the workload uses its direct
+* ``cloudflared-route`` endpoint must be set up, unless the workload uses its direct
   ``tunnel-token`` configuration.
 * The configured Juju secret must contain ``tunnel-token`` and be granted to
   the consuming application.
