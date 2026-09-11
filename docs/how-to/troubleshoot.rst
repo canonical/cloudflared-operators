@@ -26,9 +26,8 @@ Check the following conditions:
 * A nameserver supplied by the configurator must resolve the intended origin
   names. Unset ``nameserver`` to use the host resolver when the Kubernetes DNS
   service is not available.
-* Check the configured snap channel when a snap instance cannot be installed or
-  refreshed.
 
 If Juju reports an active workload but external requests fail, check the
 Cloudflare tunnel connection, DNS record, and Cloudflare-side origin route.
-Those settings are outside the charm relation data.
+Those settings are outside the charm relation data. Check the configured snap
+channel when a snap instance cannot be installed or refreshed.
