@@ -1,63 +1,72 @@
 .. meta::
-   :description: Advanced operations for the Cloudflared charms.
+   :description: Manage multiple Cloudflare Tunnel instances with Juju.
 
 .. _tutorial_advanced_deployment:
 
-Advanced operations for cloudflared
-===================================
+Manage multiple Cloudflare Tunnel instances
+===========================================
+
 This tutorial assumes that you completed the :ref:`basic deployment tutorial
-<tutorial_basic_deployment>`. It covers settings that are useful when one
-model manages more than one tunnel or needs observability.
+<tutorial_basic_deployment>`. It shows how to attach a second tunnel provider
+to the same ``cloudflared`` subordinate. Each active ``cloudflared-route``
+relation creates a separate ``charmed-cloudflared`` snap instance.
 
-Configure a custom nameserver
------------------------------
+What you'll need
+----------------
 
-Set a resolver on the configurator. The value is sent to each relation-backed
-``cloudflared`` snap instance:
+- A healthy basic deployment.
+- A second Cloudflare Tunnel token in ``CLOUDFLARE_SECOND_TUNNEL_TOKEN``.
+- A hostname for the second tunnel in ``CLOUDFLARE_SECOND_PUBLIC_HOSTNAME``.
+
+Deploy a second configurator
+----------------------------
+
+Deploy another instance of the configurator charm and connect it to
+``cloudflared``. The existing ``cloudflare-configurator`` application remains
+the first tunnel provider:
 
 .. code-block:: bash
 
-   juju config cloudflare-configurator nameserver=8.8.8.8
+   juju deploy cloudflare-configurator tunnel-b
+   juju integrate tunnel-b:cloudflared-route cloudflared:cloudflared-route
 
-Unset the option to return to the resolver configuration of the host machine:
+Configure the second tunnel
+---------------------------
+
+Create a separate Juju secret for the second tunnel. Grant the secret to the
+second configurator and set its hostname:
 
 .. code-block:: bash
 
-   juju config cloudflare-configurator nameserver=""
+   secret_id="$(juju add-secret cloudflare-tunnel-b \
+       tunnel-token="$CLOUDFLARE_SECOND_TUNNEL_TOKEN" | awk '/secret:/ {print $1}')"
+   juju grant-secret "$secret_id" tunnel-b
+   juju config tunnel-b tunnel-token="$secret_id" \
+       domain="$CLOUDFLARE_SECOND_PUBLIC_HOSTNAME"
 
-Manage multiple tunnel instances
---------------------------------
+Verify both tunnel instances
+----------------------------
 
-The ``cloudflared`` charm creates a separate snap instance for each active
-``cloudflared-route`` relation. Add another route provider, then verify all
-instances and relations:
+Check that both route relations are present:
 
 .. code-block:: bash
 
    juju status --relations
-   juju debug-log --replay
 
-A direct ``tunnel-token`` configuration and a route-backed configuration cannot
-be used at the same time. Remove the direct configuration before adding a route
-provider.
-
-Change the snap channel
------------------------
-
-Select a supported channel for the installed workload snap:
+The ``cloudflared`` unit should have two active ``cloudflared-route``
+relations, one from each configurator application. The subordinate creates one
+snap instance for each relation. You can inspect the instances on the
+subordinate unit:
 
 .. code-block:: bash
 
-   juju config cloudflared charmed-cloudflared-snap-channel=latest/edge
+   juju exec --unit cloudflared/0 -- snap list | grep charmed-cloudflared
 
-The charm refreshes each installed snap instance after the configuration change.
+The two tunnel tokens and public host names are managed independently. Removing one
+``cloudflared-route`` relation removes only the corresponding snap instance.
 
-Integrate with COS
-------------------
+Next steps
+----------
 
-Use the ``cos-agent`` relation to publish snap metrics endpoints and the
-Cloudflared dashboard:
-
-.. code-block:: bash
-
-   juju integrate cloudflared:cos-agent cos-agent-consumer
+- Learn how to :ref:`integrate with COS <how_to_integrate_with_cos>`.
+- Learn how to :ref:`upgrade the charms <how_to_upgrade>`.
