@@ -7,8 +7,8 @@ Use the cloudflare-configurator charm
 =====================================
 
 The ``cloudflare-configurator`` charm manages the settings consumed by the
-``cloudflared`` subordinate. It sends the tunnel token and optional DNS
-resolver across ``cloudflared-route`` and publishes the configured public URL
+``cloudflared`` subordinate. Use this charm to send the tunnel token and optional DNS
+resolver across ``cloudflared-route`` and publish the configured public URL
 through ``ingress``.
 
 Set the public hostname
