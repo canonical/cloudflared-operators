@@ -111,6 +111,13 @@ workload charms:
    juju integrate frontend:ingress cloudflare-configurator:ingress
    juju integrate cloudflared:cloudflared-route cloudflare-configurator:cloudflared-route
 
+* ``juju-info`` attaches the subordinate ``cloudflared`` charm to the
+    principal application's machine.
+* ``ingress`` lets ``cloudflare-configurator`` publish the configured public
+    hostname to the frontend application.
+* ``cloudflared-route`` sends the tunnel token and resolver settings from
+    ``cloudflare-configurator`` to ``cloudflared``.
+
 Configure the tunnel
 --------------------
 
