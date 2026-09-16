@@ -129,6 +129,14 @@ Create a Juju secret, grant it to the configurator, and configure the hostname:
    juju grant-secret "$secret_id" cloudflare-configurator
    juju config cloudflare-configurator tunnel-token="$secret_id" domain="$CLOUDFLARE_PUBLIC_HOSTNAME"
 
+The tunnel token secret stores authentication credentials for the ``cloudflared``
+process with an existingCloudflare Tunnel. The configurator passes the
+secret-backed value to ``cloudflared`` through the ``cloudflared-route`` relation.
+
+The hostname is the public URL associated with the tunnel. The configurator
+publishes it to a related frontend through ``ingress``. DNS records and the
+Cloudflare-side origin route must still be configured separately in Cloudflare.
+
 Verify the deployment
 ---------------------
 
