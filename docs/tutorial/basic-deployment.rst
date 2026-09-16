@@ -23,13 +23,61 @@ What you'll do
 What you'll need
 ----------------
 
-- Juju 3.x connected to a controller with a machine cloud.
-- A machine where the subordinate ``cloudflared`` charm can run.
-- A principal application named ``frontend`` that provides ``juju-info`` and
-  requires ``ingress``.
-- A Cloudflare Tunnel token in the ``CLOUDFLARE_TUNNEL_TOKEN`` environment
-  variable.
-- A hostname in the Cloudflare zone in ``CLOUDFLARE_PUBLIC_HOSTNAME``.
+.. vale Canonical.013-Spell-out-numbers-below-10 = NO
+
+.. SPREAD SKIP
+
+You will need a working station, e.g., a laptop, with AMD64 architecture. Your working station
+should have at least 4 CPU cores, 8 GB of RAM, and 50 GB of disk space.
+
+.. tip::
+
+    You can use Multipass to create an isolated environment by running:
+
+    .. code-block::
+
+        multipass launch 24.04 --name charm-tutorial-vm --cpus 4 --memory 8G --disk 50G
+
+
+This tutorial requires the following software to be installed on your working station
+(either locally or in the Multipass VM):
+
+- Juju 3
+
+Use `Concierge <https://github.com/canonical/concierge>`_ to set up Juju and LXD:
+
+.. code-block::
+
+    sudo snap install --classic concierge
+    sudo concierge prepare -p machine
+
+This first command installs Concierge, and the second command uses Concierge to install
+and configure Juju and LXD.
+
+For this tutorial, Juju must be bootstrapped to a LXD controller. Concierge should
+complete this step for you, and you can verify by checking for
+``msg="Bootstrapped Juju" provider=lxd``
+in the terminal output and by running ``juju controllers``.
+
+If Concierge did not perform the bootstrap, run:
+
+.. code-block::
+
+    juju bootstrap localhost tutorial-controller
+
+
+To be able to work inside the Multipass VM, log in with the following command:
+
+.. code-block:: bash
+
+    multipass shell charm-tutorial-vm
+
+.. note::
+
+    If you're working locally, you don't need to do this step.
+
+.. SPREAD SKIP END
+
 
 Set up the environment
 ----------------------
