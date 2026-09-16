@@ -34,11 +34,11 @@ In this documentation
     * - Get started
       - :ref:`Guided tutorial <tutorial_index>` | :ref:`High-level deployment <reference_high_level_deployment>`
     * - Deployment
-      - :ref:`Configure DNS <how_to_configure_dns>` | :ref:`Expose a front-end <how_to_expose_frontend>`
+      - :ref:`Configure DNS <how_to_configure_dns>` | :ref:`Expose a front-end <how_to_expose_frontend>` | :ref:`Use the configurator charm <how_to_use_configurator>`
     * - Operations
       - :ref:`Integrate with COS <how_to_integrate_with_cos>` | :ref:`Upgrade <how_to_upgrade>` | :ref:`Troubleshoot <how_to_troubleshoot>`
-    * - Product-specific feature
-      - :ref:`Use the configurator charm <how_to_use_configurator>` | :ref:`Actions <reference_actions>`
+    * - Reference
+      - :ref:`Actions <reference_actions>`
     * - Design
       - :ref:`Architecture <reference_charm_architecture>` | :ref:`Design <explanation_charm_design>`
     * - Security
