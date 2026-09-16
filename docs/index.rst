@@ -38,11 +38,11 @@ In this documentation
     * - Operations
       - :ref:`Integrate with COS <how_to_integrate_with_cos>` | :ref:`Upgrade <how_to_upgrade>` | :ref:`Troubleshoot <how_to_troubleshoot>`
     * - Reference
-      - :ref:`Actions <reference_actions>`
+      - :ref:`Actions <reference_actions>` | :ref:`Configurations <reference_configurations>`
     * - Design
       - :ref:`Architecture <reference_charm_architecture>` | :ref:`Design <explanation_charm_design>`
     * - Security
-      - :ref:`Overview <explanation_security>` | :ref:`Configurations <reference_configurations>`
+      - :ref:`Overview <explanation_security>`
 
 How this documentation is organized
 ------------------------------------
