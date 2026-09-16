@@ -6,9 +6,9 @@
 How to integrate with Canonical Observability Stack (COS)
 ===========================================
 
-`Canonical Observability Stack (COS) <https://documentation.ubuntu.com/observability/latest/>`_
- is a collection of charms that is used to provide observability, metrics and
- tracing for a charm and it's workload.
+The `Canonical Observability Stack (COS) <https://documentation.ubuntu.com/observability/latest/>`_
+is a collection of charms that is used to provide observability, metrics and
+tracing for a charm and its workload.
 
 The ``cloudflared`` charm provides the ``cos-agent`` relation. It publishes the
 metrics endpoints for its installed ``charmed-cloudflared`` snap instances and
