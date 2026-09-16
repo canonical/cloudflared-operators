@@ -7,6 +7,7 @@ Cryptographic overview
 ======================
 
 The charms do not implement cryptographic protocols. Juju protects the tunnel
-credential as a secret, and ``cloudflared`` establishes the encrypted tunnel to
-Cloudflare. Refer to the `Cloudflare Tunnel documentation <https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/>`_
+credential as a `secret <https://canonical.com/juju/docs/juju-cli/3.6/reference/secret/>`_,
+and ``cloudflared`` establishes the encrypted tunnel to Cloudflare. Refer to the
+`Cloudflare Tunnel documentation <https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/>`_
 for protocol and certificate details.
