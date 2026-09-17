@@ -16,6 +16,7 @@ DNS and networking
    :maxdepth: 1
 
    Configure DNS <configure-dns>
+   Expose a front-end application <expose-frontend>
 
 Charm operations
 ----------------

@@ -1,4 +1,4 @@
-# Cloudflared operators
+# cloudflared operators
 This repository provides a collection of operators related to Cloudflare's `cloudflared` tunnel.
 This repository contains the code for the following charms:
 1. `cloudflared`: A subordinate machine charm that deploys and manages the `cloudflared` tunnel. See the [cloudflared-operator README](cloudflared-operator/README.md) for more information.
