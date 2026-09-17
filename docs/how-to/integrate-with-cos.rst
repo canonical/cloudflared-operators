@@ -4,7 +4,7 @@
 .. _how_to_integrate_with_cos:
 
 How to integrate with Canonical Observability Stack (COS)
-===========================================
+=========================================================
 
 The `Canonical Observability Stack (COS) <https://documentation.ubuntu.com/observability/latest/>`_
 is a collection of charms that is used to provide observability, metrics and

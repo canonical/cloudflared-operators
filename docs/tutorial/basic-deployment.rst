@@ -112,11 +112,11 @@ workload charms:
    juju integrate cloudflared:cloudflared-route cloudflare-configurator:cloudflared-route
 
 * ``juju-info`` attaches the subordinate ``cloudflared`` charm to the
-    principal application's machine.
+  principal application's machine.
 * ``ingress`` lets ``cloudflare-configurator`` publish the configured public
-    hostname to the frontend application.
+  hostname to the frontend application.
 * ``cloudflared-route`` sends the tunnel token and resolver settings from
-    ``cloudflare-configurator`` to ``cloudflared``.
+  ``cloudflare-configurator`` to ``cloudflared``.
 
 Configure the tunnel
 --------------------
@@ -130,7 +130,7 @@ Create a Juju secret, grant it to the configurator, and configure the hostname:
    juju config cloudflare-configurator tunnel-token="$secret_id" domain="$CLOUDFLARE_PUBLIC_HOSTNAME"
 
 The tunnel token secret stores authentication credentials for the ``cloudflared``
-process with an existingCloudflare Tunnel. The configurator passes the
+process with an existing Cloudflare Tunnel. The configurator passes the
 secret-backed value to ``cloudflared`` through the ``cloudflared-route`` relation.
 
 The hostname is the public URL associated with the tunnel. The configurator
@@ -176,5 +176,6 @@ Next steps
 ----------
 
 - Learn how to :ref:`configure custom DNS settings <how_to_configure_dns>`.
+- Learn how to :ref:`manage multiple tunnel instances <tutorial_advanced_deployment>`.
 - Learn how to :ref:`expose a front-end application <how_to_expose_frontend>`.
 - Learn how to :ref:`use the configurator charm <how_to_use_configurator>`.

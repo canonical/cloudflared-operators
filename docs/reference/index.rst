@@ -48,11 +48,10 @@ relations to a principal application.
 Advanced topics
 ---------------
 
-These pages cover cryptographic boundaries and the current Terraform status.
+These pages cover cryptographic boundaries.
 
 .. toctree::
     :hidden:
     :maxdepth: 1
 
     Cryptographic overview <cryptographic-overview>
-    Terraform <terraform>

@@ -7,16 +7,25 @@ Manage multiple Cloudflare Tunnel instances
 ===========================================
 
 This tutorial assumes that you completed the :ref:`basic deployment tutorial
-<tutorial_basic_deployment>`. It shows how to attach a second tunnel provider
-to the same ``cloudflared`` subordinate. Each active ``cloudflared-route``
+<tutorial_basic_deployment>`. A second tunnel provider can give a separate
+team or environment an independent tunnel lifecycle and credentials. This
+tutorial shows how to attach it to the same ``cloudflared`` subordinate. Each
+active ``cloudflared-route``
 relation creates a separate ``charmed-cloudflared`` snap instance.
 
 What you'll need
 ----------------
 
 - A healthy basic deployment.
-- A second Cloudflare Tunnel token in ``CLOUDFLARE_SECOND_TUNNEL_TOKEN``.
+- A second Cloudflare Tunnel and its token in
+  ``CLOUDFLARE_SECOND_TUNNEL_TOKEN``.
 - A hostname for the second tunnel in ``CLOUDFLARE_SECOND_PUBLIC_HOSTNAME``.
+
+Create the second tunnel and configure its public hostname in Cloudflare before
+continuing. Save the tunnel token and hostname in the environment variables
+shown above. See the `Cloudflare Tunnel documentation
+<https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/>`_
+for the Cloudflare-side setup.
 
 Deploy a second configurator
 ----------------------------
@@ -64,6 +73,18 @@ subordinate unit:
 
 The two tunnel tokens and public host names are managed independently. Removing one
 ``cloudflared-route`` relation removes only the corresponding snap instance.
+
+Clean up
+--------
+
+Remove the second configurator when you finish with the additional tunnel:
+
+.. code-block:: bash
+
+   juju remove-application tunnel-b
+
+This removes the second route relation and its corresponding snap instance
+while leaving the basic deployment in place.
 
 Next steps
 ----------

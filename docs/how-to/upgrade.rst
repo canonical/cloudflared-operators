@@ -20,8 +20,9 @@ Refresh each application from the channel it was originally deployed from:
    juju refresh cloudflared
    juju refresh cloudflare-configurator
 
-It is recomended to refresh both charms, refer to the same track as to avoid
-breaking changes.
+It is recommended to refresh both charms from the same track to avoid
+breaking changes. If you need to switch tracks, :ref:`redeploy the charms
+<how_to_redeploy>` instead.
 
 After the refresh, verify that units, relations, and snap instances are active:
 

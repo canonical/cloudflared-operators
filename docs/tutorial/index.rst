@@ -12,8 +12,8 @@ This section provides step-by-step guidance for deploying and operating the
 Get started
 -----------
 
-The basic tutorial deploys both charms, relates them to a principal application,
-and verifies the resulting Juju status.
+The basic tutorial deploys both charms, integrates them with a principal
+application, and verifies the resulting Juju status.
 
 .. vale Canonical.013-Spell-out-numbers-below-10 = NO
 
@@ -27,8 +27,7 @@ Advanced deployment
 --------------------
 
 After completing the basic deployment, use the advanced deployment guide to configure
-multiple tunnel relations, custom DNS resolution, snap channels, and COS
-metrics.
+multiple tunnel relations.
 
 .. toctree::
     :hidden:

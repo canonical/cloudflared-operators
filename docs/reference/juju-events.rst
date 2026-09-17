@@ -20,9 +20,9 @@ The ``cloudflared`` charm observes and reconciles these events:
 
 The ``cloudflare-configurator`` charm observes ``config-changed``, ingress data
 changes, ``cloudflared-route`` relation changes, and the
-``get-ingress-data`` action. Its reconciliation requires both ``domain`` and
-``tunnel-token`` before it publishes or sends tunnel data.
+``get-ingress-data`` action. The configurator's reconciliation requires both
+``domain`` and ``tunnel-token`` before it publishes or sends tunnel data.
 
-More more information about Juju events, refer to the
+For more information about Juju events, refer to the
 `List of hook commands <https://canonical.com/juju/docs/juju-cli/3.6/reference/hook-command/list-of-hook-commands/>`_
 documentation.

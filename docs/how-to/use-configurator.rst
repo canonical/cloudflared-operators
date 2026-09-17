@@ -3,8 +3,8 @@
 
 .. _how_to_use_configurator:
 
-Use the cloudflare-configurator charm
-=====================================
+How to use the cloudflare-configurator charm
+==============================================
 
 The ``cloudflare-configurator`` charm manages the settings consumed by the
 ``cloudflared`` subordinate. Use this charm to send the tunnel token and optional DNS
@@ -34,8 +34,8 @@ resolver:
 
    juju config cloudflare-configurator nameserver=8.8.8.8
 
-Unset the option to use the resolver configuration of the host machine when the
-Kubernetes DNS service is unavailable:
+Unset the option to use the Kubernetes DNS service when it is resolvable. On a
+machine cloud where it is unavailable, set ``nameserver`` explicitly instead:
 
 .. code-block:: bash
 

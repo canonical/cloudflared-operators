@@ -24,5 +24,5 @@ The per-charm changelogs are the current release history:
 * `cloudflared changelog <https://github.com/canonical/cloudflared-operators/blob/main/cloudflared-operator/CHANGELOG.md>`_.
 * `cloudflare-configurator changelog <https://github.com/canonical/cloudflared-operators/blob/main/cloudflare-configurator-operator/CHANGELOG.md>`_.
 
-Individual RST release pages can be added to this section and included in a
+Individual release pages can be added to this section and included in a
 table of contents when published.

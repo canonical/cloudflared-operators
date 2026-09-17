@@ -30,7 +30,6 @@ Charm operations
    Redeploy <redeploy>
    Upgrade <upgrade>
    Get ingress data <get-ingress-data>
-   Use Terraform <terraform>
 
 Development and community
 -------------------------

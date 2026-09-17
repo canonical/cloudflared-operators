@@ -5,8 +5,8 @@
 
 .. _index:
 
-Cloudflared operator
-====================
+Cloudflared operators
+======================
 
 .. vale Canonical.007-Headings-sentence-case = YES
 
@@ -36,13 +36,11 @@ In this documentation
     * - Deployment
       - :ref:`Configure DNS <how_to_configure_dns>` | :ref:`Expose a front-end <how_to_expose_frontend>` | :ref:`Use the configurator charm <how_to_use_configurator>`
     * - Operations
-      - :ref:`Integrate with COS <how_to_integrate_with_cos>` | :ref:`Upgrade <how_to_upgrade>` | :ref:`Troubleshoot <how_to_troubleshoot>`
-    * - Reference
-      - :ref:`Actions <reference_actions>` | :ref:`Configurations <reference_configurations>`
+      - :ref:`Integrate with COS <how_to_integrate_with_cos>` | :ref:`Upgrade <how_to_upgrade>` | :ref:`Troubleshoot <how_to_troubleshoot>` | :ref:`Actions <reference_actions>` | :ref:`Configurations <reference_configurations>`
     * - Design
       - :ref:`Architecture <reference_charm_architecture>` | :ref:`Design <explanation_charm_design>`
     * - Security
-      - :ref:`Overview <explanation_security>`
+      - :ref:`Overview <explanation_security>` | :ref:`Cryptographic overview <reference_cryptographic_overview>`
 
 How this documentation is organized
 ------------------------------------
