@@ -1,10 +1,10 @@
 .. meta::
-   :description: An overview of the cryptographic components used by the Cloudflared charms.
+   :description: An overview of the security and cryptographic components used by the Cloudflared charms.
 
 .. _reference_cryptographic_overview:
 
-Cryptographic overview
-======================
+Security and cryptographic overview
+===================================
 
 The charms do not implement cryptographic protocols. Juju protects the tunnel
 credential as a `secret <https://canonical.com/juju/docs/juju-cli/3.6/reference/secret/>`_,
