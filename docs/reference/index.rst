@@ -6,15 +6,17 @@
 Reference
 =========
 
-This section contains technical details about the ``cloudflared`` subordinate
-machine charm and the ``cloudflare-configurator`` charm. It documents their
-configuration, actions, events, relations, and operational interfaces.
+Technical specifications and architectural details about the `cloudflared`
+subordinate charm and the `cloudflare-configurator` charm. Useful when you
+want to configure or integrate the charms, or just want to learn more
+about how the Cloudflared charms work.
 
 Charm usage
 -----------
 
-The following pages provide reference information for deploying and integrating
-the charms.
+Operators control charm behavior through configuration options, Juju actions,
+and Juju integrations. Learn the inner workings of the charm, which can help
+you understand the current charm configuration interface and debug problems.
 
 .. vale Canonical.013-Spell-out-numbers-below-10 = NO
 .. vale Canonical.500-Repeated-words = NO
@@ -35,8 +37,8 @@ the charms.
 Architecture and deployments
 ----------------------------
 
-These pages describe the subordinate workload, the configurator, and their
-relations to a principal application.
+Peek into the design and architecture of the charm, useful if you want to
+audit or contribute to the Cloudflared charm project.
 
 .. toctree::
     :hidden:
@@ -44,14 +46,4 @@ relations to a principal application.
 
     Charm architecture <charm-architecture>
     High-level deployment overview <high-level-deployment>
-
-Advanced topics
----------------
-
-These pages cover cryptographic boundaries.
-
-.. toctree::
-    :hidden:
-    :maxdepth: 1
-
-    Cryptographic overview <cryptographic-overview>
+    Security and cryptographic overview <cryptographic-overview>
