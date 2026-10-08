@@ -12,8 +12,8 @@ production maintenance.
 Charm operations
 ----------------
 
-Essential operational tasks, such as configuration and backup, during the
-usage of Cloudflared charms.
+Understanding operational tasks, such as configuration and backup,
+is essential to use the Cloudflared charms.
 
 .. toctree::
    :maxdepth: 1
@@ -30,10 +30,8 @@ usage of Cloudflared charms.
 Development and community
 -------------------------
 
-If you have encountered any problems while using the Cloudflared charms,
-check out the troubleshooting guide. If you have any bug fixes or features
-you would like to add to the Cloudflared charms, check our contributing guide
-first.
+Discover how to resolve common deployment issues and contribute
+any bug fixes or features to the Cloudflared charms.
 
 .. toctree::
    :maxdepth: 1

@@ -7,9 +7,7 @@ Reference
 =========
 
 Technical specifications and architectural details about the `cloudflared`
-subordinate charm and the `cloudflare-configurator` charm. Useful when you
-want to configure or integrate the charms, or just want to learn more
-about how the Cloudflared charms work.
+subordinate charm and the `cloudflare-configurator` charm.
 
 Charm usage
 -----------
@@ -37,7 +35,7 @@ you understand the current charm configuration interface and debug problems.
 Architecture and deployments
 ----------------------------
 
-Peek into the design and architecture of the charm, useful if you want to
+Peek into the design and architecture of the charm, which is useful if you want to
 audit or contribute to the Cloudflared charm project.
 
 .. toctree::

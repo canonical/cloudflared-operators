@@ -4,7 +4,7 @@
 .. _reference_cryptographic_overview:
 
 Security and cryptographic overview
-======================
+===================================
 
 The charms do not implement cryptographic protocols. Juju protects the tunnel
 credential as a `secret <https://canonical.com/juju/docs/juju-cli/3.6/reference/secret/>`_,
