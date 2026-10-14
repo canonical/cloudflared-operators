@@ -22,8 +22,8 @@ run "basic_deploy" {
   }
 
   assert {
-    condition     = output.provides.value.endpoint == "cloudflared-route"
-    error_message = "cloudflare-configurator module should provide 'provides.value' output"
+    condition     = output.provides.cloudflared_route.endpoint == "cloudflared-route"
+    error_message = "cloudflare-configurator module should provide 'provides.cloudflared_route' output"
   }
 
   assert {

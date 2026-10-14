@@ -22,13 +22,13 @@ run "basic_deploy" {
   }
 
   assert {
-    condition     = output.provides.value.endpoint == "cos-agent"
-    error_message = "cloudflared module should provide 'provides.value' output"
+    condition     = output.provides.cos_agent.endpoint == "cos-agent"
+    error_message = "cloudflared module should provide 'provides.cos_agent' output"
   }
 
   assert {
-    condition     = output.requires.value.endpoint == "cloudflared-route"
-    error_message = "cloudflared module should provide 'requires.value' output"
+    condition     = output.requires.cloudflared_route.endpoint == "cloudflared-route"
+    error_message = "cloudflared module should provide 'requires.cloudflared_route' output"
   }
 
   assert {
