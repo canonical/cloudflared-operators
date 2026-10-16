@@ -1,0 +1,20 @@
+# Copyright 2026 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+version_schema: 2
+
+changes:
+  - title: Added CC008-compliant Terraform modules
+    author: weiiwang01
+    type: minor
+    description: >
+      Added Terraform modules for the cloudflared and cloudflare-configurator
+      charms following the CC008 Charm Terraform Module standard, together with
+      the Terraform test, compliance, release and documentation workflows.
+    urls:
+      pr:
+        - https://github.com/canonical/cloudflared-operators/pull/30
+      related_doc:
+      related_issue:
+    visibility: public
+    highlight: false

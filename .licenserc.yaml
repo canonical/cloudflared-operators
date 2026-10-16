@@ -34,4 +34,5 @@ header:
   - 'docs/release-notes/template/*.yaml'
   - 'uv.lock'
   - '**/uv.lock'
+  - '**/MAJOR_VERSION'
   comment: on-failure
