@@ -5,9 +5,9 @@
 
 """Integration tests."""
 
-import contextlib
 import json
 import logging
+import subprocess  # nosec
 import time
 
 import jubilant
@@ -37,15 +37,33 @@ def wait_for_tunnel_healthy(cloudflare_api, tunnel_token):
 
 
 def reboot_application(juju: jubilant.Juju, app: str) -> None:
-    """Reboot all units of an application (required for deploying in LXD containers).
+    """Reboot the LXD containers hosting an application.
 
     Args:
         juju: Jubilant juju instance.
         app: Application name.
     """
-    # Rebooting terminates the exec session, which is expected.
-    with contextlib.suppress(jubilant.CLIError):
-        juju.cli("exec", "--application", app, "--", "sudo", "reboot")
+    status = json.loads(juju.cli("status", "--format", "json"))
+    machines = status.get("machines", {})
+    applications = status.get("applications", {})
+
+    machine_ids: set[str] = set()
+    for unit in applications.get(app, {}).get("units", {}).values():
+        if "machine" in unit:
+            machine_ids.add(unit["machine"])
+    if not machine_ids:
+        for principal in applications.values():
+            for unit in principal.get("units", {}).values():
+                subordinates = unit.get("subordinates", {})
+                if any(sub.split("/")[0] == app for sub in subordinates) and "machine" in unit:
+                    machine_ids.add(unit["machine"])
+
+    for machine in machine_ids:
+        container = machines.get(machine, {}).get("instance-id")
+        if container is None:
+            continue
+        logger.info("restarting LXD container %s for %s", container, app)
+        subprocess.run(["lxc", "restart", container], check=True)  # nosec
 
 
 def test_tunnel_token_config(juju, cloudflare_api, cloudflared_charm):
@@ -54,9 +72,9 @@ def test_tunnel_token_config(juju, cloudflare_api, cloudflared_charm):
     act: provide the tunnel-token charm config.
     assume: cloudflared tunnels provided in the charm config is up and healthy
     """
-    base_app = "chrony"
-    juju.deploy(base_app, channel="latest/edge", config={"sources": "ntp://ntp.ubuntu.com"})
-    juju.integrate(base_app, cloudflared_charm)
+    base_app = "any-charm"
+    juju.deploy("any-charm", app=base_app, channel="latest/beta", base="ubuntu@24.04")
+    juju.integrate(f"{base_app}:juju-info", f"{cloudflared_charm}:juju-info")
     tunnel_token = cloudflare_api.create_tunnel_token()
     secret_uri = juju.add_secret("test-tunnel-token", {"tunnel-token": tunnel_token})
     juju.grant_secret("test-tunnel-token", cloudflared_charm)
@@ -110,7 +128,7 @@ def test_update_snap_channel(juju, cloudflared_charm):
     """
     juju.config(cloudflared_charm, {"charmed-cloudflared-snap-channel": "latest/edge"})
     juju.wait(jubilant.all_agents_idle, error=jubilant.any_error)
-    snap_list = juju.cli("exec", "--unit", "chrony/0", "--", "snap", "list")
+    snap_list = juju.cli("exec", "--unit", "any-charm/0", "--", "snap", "list")
     assert "charmed-cloudflared_" in snap_list
     for line in snap_list.splitlines():
         if "charmed-cloudflared_" in line:
@@ -160,20 +178,23 @@ def test_remove(juju, cloudflared_charm):
     act: remove the cloudflared charm.
     assume: cloudflared charm should uninstall all charmed-cloudflared snap instances.
     """
-    snap_list = juju.cli("exec", "--unit", "chrony/0", "--", "snap", "list")
+    snap_list = juju.cli("exec", "--unit", "any-charm/0", "--", "snap", "list")
     assert "charmed-cloudflared_" in snap_list
     logger.info("snap list before removal: %s", snap_list)
-    juju.remove_relation(cloudflared_charm, "chrony")
-    juju.wait(lambda status: not status.apps[cloudflared_charm].units)
+    juju.remove_relation(f"{cloudflared_charm}:juju-info", "any-charm:juju-info")
+    juju.wait(
+        lambda status: not status.apps[cloudflared_charm].units
+        and "juju-info" not in status.apps[cloudflared_charm].relations
+    )
     deadline = time.time() + 300
     while True:
-        snap_list = juju.cli("exec", "--unit", "chrony/0", "--", "snap", "list")
+        snap_list = juju.cli("exec", "--unit", "any-charm/0", "--", "snap", "list")
         if "charmed-cloudflared_" not in snap_list or time.time() > deadline:
             break
         time.sleep(5)
     assert "charmed-cloudflared_" not in snap_list
     logger.info("snap list after removal: %s", snap_list)
-    juju.integrate("chrony", cloudflared_charm)
+    juju.integrate("any-charm:juju-info", f"{cloudflared_charm}:juju-info")
 
 
 def test_secret_config_permission(

@@ -1,0 +1,5 @@
+# Copyright 2026 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+# Internal origin URLs in documentation are not externally reachable.
+exclude = ["^http://frontend:8080/?$"]

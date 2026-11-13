@@ -1,15 +1,13 @@
 .. meta::
-   :description: Reference documentation for all actions available in the __charm_name__ charm.
+   :description: Reference documentation for all actions available in the cloudflare-configurator charm.
 
 .. _reference_actions:
 
 Actions
 =======
 
-.. TODO: Add link to the Charmhub actions tab.
-
-See Actions.
+See `Actions on Charmhub <https://charmhub.io/cloudflare-configurator/actions>`_.
 
 .. seealso::
 
-   Read more about actions in the Juju docs: `Action <https://documentation.ubuntu.com/juju/latest/user/reference/action/>`_
+   Read more about actions in the Juju docs: `Action <https://documentation.ubuntu.com/juju/latest/user/reference/action/>`_.
