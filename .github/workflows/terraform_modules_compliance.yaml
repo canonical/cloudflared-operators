@@ -1,0 +1,17 @@
+# Copyright 2026 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+name: Terraform modules compliance
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "**/terraform/**"
+      - ".github/workflows/terraform_modules_compliance.yaml"
+
+jobs:
+  terraform-compliance:
+    uses: canonical/operator-workflows/.github/workflows/terraform_modules_compliance.yaml@95c819190372baf8338f3ed15b80ba76ec881136  # main
+    with:
+      terraform-directories: '["terraform/charm/cloudflared", "terraform/charm/cloudflare_configurator"]'

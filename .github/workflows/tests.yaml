@@ -25,7 +25,7 @@ jobs:
       working-directory: ${{ matrix.charm.working-directory }}
       with-uv: true
   integration-test:
-    uses: canonical/charm-ci/.github/workflows/integration-test.yml@0eef5b8cbef3ee74907850f790cab64bcf0499e5 # v1.0.0
+    uses: canonical/charm-ci/.github/workflows/integration-test.yml@14b1cf49d48b9d5b96192d9bca2890c98b7295cf # v1.0.2
     with:
       spread-jobs-include: "integration-test-ci:*"
       test-secret-1-name: CLOUDFLARE_ACCOUNT_ID
@@ -98,9 +98,9 @@ jobs:
             action=reject protocol=tcp \
             destination_port="0-8887,8889-65535" state=enabled
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
-          python-version: '3.14'
+          python-version: '3.15'
       - name: Install dependencies
         run: pip install pytest requests
       - name: Run tests

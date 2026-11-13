@@ -25,6 +25,8 @@ __pycache__/
 terraform/**/.terraform*
 terraform/**/.tfvars
 terraform/**/*.tfstate*
+**/.terraform/
+**/.terraform.lock.hcl
 # opcli/spread generated files
 .spread-reuse.*
 .spread-run-*/
