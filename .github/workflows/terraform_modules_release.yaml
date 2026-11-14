@@ -18,14 +18,14 @@ on:
 
 jobs:
   cloudflared-terraform:
-    uses: canonical/operator-workflows/.github/workflows/terraform_modules_release.yaml@ee6ae1904efb4732afd72f8f261cddf445ff07fc  # main
+    uses: canonical/operator-workflows/.github/workflows/terraform_modules_release.yaml@8c89aed9e2cd37a613b172cd67fd672ae8dc05f6  # main
     permissions:
       contents: write
     with:
       tag-prefix: cloudflared-tf-
       major-version-file: terraform/charm/cloudflared/MAJOR_VERSION
   cloudflare-configurator-terraform:
-    uses: canonical/operator-workflows/.github/workflows/terraform_modules_release.yaml@ee6ae1904efb4732afd72f8f261cddf445ff07fc  # main
+    uses: canonical/operator-workflows/.github/workflows/terraform_modules_release.yaml@8c89aed9e2cd37a613b172cd67fd672ae8dc05f6  # main
     permissions:
       contents: write
     with:
